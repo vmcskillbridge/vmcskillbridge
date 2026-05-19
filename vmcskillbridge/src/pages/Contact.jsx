@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-
+const API_URL = import.meta.env.VITE_API_URL;
 import {
   Mail,
   Phone,
@@ -14,6 +14,8 @@ import {
   Paperclip,
   Send,
 } from "lucide-react";
+
+
 
 function Contact() {
   const [fileName, setFileName] = useState("");
@@ -77,7 +79,7 @@ function Contact() {
       }
 
       const res = await axios.post(
-        "http://localhost:5000/api/contacts",
+        `${API_URL}/api/contacts`,
         submitData,
         {
           headers: {
@@ -103,6 +105,11 @@ function Contact() {
       });
 
       setFileName("");
+
+      setTimeout(() => {
+        setSuccess(false);
+      }, 3000);
+
     } catch (error) {
       console.log("Upload Error:", error);
       alert("Something went wrong.");

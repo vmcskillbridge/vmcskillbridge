@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 function Projects() {
   const [projects, setProjects] = useState([]);
   const [activeCategory, setActiveCategory] = useState("all");
@@ -9,7 +11,7 @@ function Projects() {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/projects");
+        const res = await axios.get(`${API_URL}/api/projects`);
         setProjects(res.data.projects);
       } catch (error) {
         console.log("Error fetching projects:", error);
@@ -74,9 +76,7 @@ function Projects() {
         </button>
 
         <button
-          className={`tab-btn ${
-            activeCategory === "ecommerce" ? "active" : ""
-          }`}
+          className={`tab-btn ${activeCategory === "ecommerce" ? "active" : ""}`}
           onClick={() => handleFilter("ecommerce")}
         >
           E-commerce
@@ -108,7 +108,7 @@ function Projects() {
                     <div className="project-title">{project.title}</div>
 
                     <div className="project-tech">
-                      {project.tech.map((item, i) => (
+                      {project.tech?.map((item, i) => (
                         <span className="tech-tag" key={i}>
                           {item}
                         </span>
@@ -117,8 +117,6 @@ function Projects() {
                   </div>
 
                   <p className="project-desc">{project.description}</p>
-
-                  
                 </div>
               ))}
             </div>

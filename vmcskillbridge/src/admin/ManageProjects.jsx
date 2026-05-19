@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+const API_URL = import.meta.env.VITE_API_URL;
 
 function ManageProjects() {
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/projects")
+    axios.get(`${API_URL}/projects`)
       .then((res) => setProjects(res.data.projects))
       .catch((err) => console.log(err));
   }, []);

@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-
+const API_URL = import.meta.env.VITE_API_URL;
 function ManageContacts() {
   const [contacts, setContacts] = useState([]);
 
   const fetchContacts = async () => {
-    const res = await axios.get("http://localhost:5000/api/contacts");
+    const res = await axios.get(`${API_URL}/contacts`);
     setContacts(res.data.contacts);
   };
 
@@ -18,7 +18,7 @@ function ManageContacts() {
 
     if (!confirmDelete) return;
 
-    await axios.delete(`http://localhost:5000/api/contacts/${id}`);
+    await axios.delete(`${API_URL}/contacts/${id}`);
     fetchContacts();
   };
 
@@ -54,7 +54,7 @@ function ManageContacts() {
                 <td>
                   {item.fileUrl ? (
                     <a
-                      href={`http://localhost:5000${item.fileUrl}`}
+                      href={`${API_URL}${item.fileUrl}`}
                       target="_blank"
                       rel="noreferrer"
                       className="admin-link"
