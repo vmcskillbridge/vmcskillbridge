@@ -1,7 +1,7 @@
 require("dotenv").config();
-const projectRoutes = require("./routes/projectRoutes");
-const contactRoutes = require("./routes/contactRoutes");
-const applicationRoutes = require("./routes/applicationRoutes");
+const projectRoutes = require("./routes/ProjectRoutes");
+const contactRoutes = require("./routes/ContactRoutes");
+const applicationRoutes = require("./routes/ApplicationRoutes");
 const path = require("path");
 const express = require("express");
 const mongoose = require("mongoose");
