@@ -56,7 +56,7 @@ function Footer() {
           <h3>Contact</h3>
           <ul>
             <li><a href="mailto:vmcskillbridge@gmail.com">📧 vmcskillbridge@gmail.com</a></li>
-            <li><a href="tel:+918919728736">📞 +91 8919728736</a></li>
+            <li><a href="tel:+91 9876543210">📞 +91 9876543210</a></li>
             <li><a href="/contact">📍 Hyderabad, India</a></li>
           </ul>
         </div>
