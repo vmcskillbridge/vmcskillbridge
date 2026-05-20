@@ -23,6 +23,7 @@ import Contact from "./pages/Contact";
 import AdminLogin from "./admin/AdminLogin";
 import AdminDashboard from "./admin/AdminDashboard";
 import AddProject from "./admin/AddProject";
+import ProtectedAdminRoute from "./admin/ProtectedAdminRoute";
 
 function Layout() {
   const location = useLocation();
@@ -59,12 +60,20 @@ function Layout() {
 
         <Route
           path="/admin/dashboard"
-          element={<AdminDashboard />}
+          element={
+            <ProtectedAdminRoute>
+              <AdminDashboard />
+            </ProtectedAdminRoute>
+          }
         />
 
         <Route
           path="/admin/add-project"
-          element={<AddProject />}
+          element={
+            <ProtectedAdminRoute>
+              <AddProject />
+            </ProtectedAdminRoute>
+          }
         />
       </Routes>
 
