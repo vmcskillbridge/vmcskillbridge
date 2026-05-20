@@ -1619,3 +1619,106 @@ section {
   .admin-top h1 { font-size: 28px; }
   .admin-logo { width: 70px; height: 70px; }
 }
+
+
+.add-project-page {
+  min-height: 100vh;
+  background: #0b0b18;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+.add-project-card {
+  width: 100%;
+  max-width: 700px;
+  background: #121225;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 24px;
+  padding: 40px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+}
+
+.add-project-top {
+  margin-bottom: 30px;
+}
+
+.add-project-top h1 {
+  color: white;
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.add-project-top p {
+  color: #9ca3af;
+}
+
+.add-project-form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form-group label {
+  color: white;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  background: #1a1a30;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 16px;
+  color: white;
+  font-size: 15px;
+  outline: none;
+  transition: 0.3s;
+}
+
+.form-group textarea {
+  min-height: 140px;
+  resize: none;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #8b5cf6;
+  box-shadow: 0 0 0 4px rgba(139,92,246,0.15);
+}
+
+.add-project-btn {
+  height: 56px;
+  border: none;
+  border-radius: 16px;
+  background: linear-gradient(135deg,#8b5cf6,#7c3aed);
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.add-project-btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.95;
+}
+
+@media (max-width: 768px) {
+  .add-project-card {
+    padding: 24px;
+  }
+
+  .add-project-top h1 {
+    font-size: 28px;
+  }
+}
