@@ -44,59 +44,90 @@ function AddProject() {
   };
 
   return (
-    <div className="admin-section">
-      <h1>Add Project</h1>
+    <main className="add-project-page">
+      <div className="add-project-card">
+        <div className="add-project-top">
+          <h1>Add New Project</h1>
+          <p>Add portfolio projects to VMC SkillBridge</p>
+        </div>
 
-      <form className="project-form" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="title"
-          placeholder="Project Title"
-          value={formData.title}
-          onChange={handleChange}
-          required
-        />
+        <form
+          className="add-project-form"
+          onSubmit={handleSubmit}
+        >
+          <div className="form-group">
+            <label>Project Title</label>
 
-        <input
-          type="text"
-          name="category"
-          placeholder="Category"
-          value={formData.category}
-          onChange={handleChange}
-          required
-        />
+            <input
+              type="text"
+              name="title"
+              placeholder="Enter project title"
+              value={formData.title}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        <input
-          type="text"
-          name="tech"
-          placeholder="React, Node.js, MongoDB"
-          value={formData.tech}
-          onChange={handleChange}
-          required
-        />
+          <div className="form-group">
+            <label>Category</label>
 
-        <input
-          type="text"
-          name="image"
-          placeholder="Image URL"
-          value={formData.image}
-          onChange={handleChange}
-          required
-        />
+            <input
+              type="text"
+              name="category"
+              placeholder="Web Development"
+              value={formData.category}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        <textarea
-          name="description"
-          placeholder="Project Description"
-          value={formData.description}
-          onChange={handleChange}
-          required
-        ></textarea>
+          <div className="form-group">
+            <label>Tech Stack</label>
 
-        <button type="submit">
-          Add Project
-        </button>
-      </form>
-    </div>
+            <input
+              type="text"
+              name="tech"
+              placeholder="React, Node.js, MongoDB"
+              value={formData.tech}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Project Image URL</label>
+
+            <input
+              type="text"
+              name="image"
+              placeholder="https://image-url.com"
+              value={formData.image}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Description</label>
+
+            <textarea
+              name="description"
+              placeholder="Write project description..."
+              value={formData.description}
+              onChange={handleChange}
+              required
+            ></textarea>
+          </div>
+
+          <button
+            className="add-project-btn"
+            type="submit"
+          >
+            Add Project
+          </button>
+        </form>
+      </div>
+    </main>
   );
 }
 
