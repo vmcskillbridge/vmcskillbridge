@@ -48,7 +48,6 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({
   storage,
   fileFilter,
-
   limits: {
     fileSize: 5 * 1024 * 1024,
   },
@@ -112,9 +111,8 @@ router.post(
               </p>
 
               <p>
-                Our hiring team will carefully review 
-                your application and contact you if 
-                your profile is shortlisted.
+                Our hiring team will review your 
+                application and contact you if shortlisted.
               </p>
 
               <div style="margin-top:30px; padding:20px; background:#151528; border-radius:12px;">
