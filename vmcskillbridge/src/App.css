@@ -1722,3 +1722,37 @@ section {
     font-size: 28px;
   }
 }
+.projects-slider {
+  width: 100%;
+  overflow: hidden;
+}
+
+.projects-grid {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 24px;
+  transition: transform 0.5s ease;
+}
+
+.project-card {
+  flex: 0 0 calc(33.333% - 16px);
+  min-width: calc(33.333% - 16px);
+}
+
+@media (max-width: 768px) {
+  .projects-slider {
+    overflow-x: auto;
+  }
+
+  .projects-grid {
+    transform: none !important;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+  }
+
+  .project-card {
+    flex: 0 0 85%;
+    min-width: 85%;
+    scroll-snap-align: center;
+  }
+}
