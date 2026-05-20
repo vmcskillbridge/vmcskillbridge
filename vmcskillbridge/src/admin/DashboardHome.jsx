@@ -8,6 +8,9 @@ import {
   Users,
 } from "lucide-react";
 
+const API_URL =
+  import.meta.env.VITE_API_URL || "https://vmcskillbridge.onrender.com";
+
 function DashboardHome() {
   const [stats, setStats] = useState({
     projects: 0,
@@ -19,15 +22,18 @@ function DashboardHome() {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const projectsRes = await axios.get("http://localhost:5000/api/projects");
-        const contactsRes = await axios.get("http://localhost:5000/api/contacts");
-        const applicationsRes = await axios.get("http://localhost:5000/api/applications");
+        const [projectsRes, contactsRes, applicationsRes] =
+          await Promise.all([
+            axios.get(`${API_URL}/api/projects`),
+            axios.get(`${API_URL}/api/contacts`),
+            axios.get(`${API_URL}/api/applications`),
+          ]);
 
         setStats({
-          projects: projectsRes.data.projects.length,
-          contacts: contactsRes.data.contacts.length,
-          applications: applicationsRes.data.applications.length,
-          clients: contactsRes.data.contacts.length,
+          projects: projectsRes.data.projects?.length || 0,
+          contacts: contactsRes.data.contacts?.length || 0,
+          applications: applicationsRes.data.applications?.length || 0,
+          clients: contactsRes.data.contacts?.length || 0,
         });
       } catch (error) {
         console.log("Dashboard stats error:", error);
@@ -72,9 +78,7 @@ function DashboardHome() {
       <div className="dashboard-stats">
         {cards.map((item, index) => (
           <div className="dashboard-card" key={index}>
-            <div className="dashboard-card-icon">
-              {item.icon}
-            </div>
+            <div className="dashboard-card-icon">{item.icon}</div>
 
             <h2>{item.value}</h2>
             <p>{item.title}</p>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-const API_URL = import.meta.env.VITE_API_URL;
+
 import {
   Mail,
   Phone,
@@ -15,11 +15,13 @@ import {
   Send,
 } from "lucide-react";
 
-
+const API_URL =
+  import.meta.env.VITE_API_URL || "https://vmcskillbridge.onrender.com";
 
 function Contact() {
   const [fileName, setFileName] = useState("");
   const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -33,8 +35,6 @@ function Contact() {
     file: null,
   });
 
-  /* INPUT CHANGE */
-
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -42,14 +42,11 @@ function Contact() {
     });
   };
 
-  /* FILE CHANGE */
-
   const handleFileChange = (e) => {
     const file = e.target.files[0];
 
     if (file) {
       setFileName(file.name);
-
       setFormData({
         ...formData,
         file,
@@ -57,36 +54,28 @@ function Contact() {
     }
   };
 
-  /* FORM SUBMIT */
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       const submitData = new FormData();
 
-      submitData.append("fullName", formData.fullName);
-      submitData.append("email", formData.email);
-      submitData.append("phone", formData.phone);
-      submitData.append("company", formData.company);
-      submitData.append("projectType", formData.projectType);
-      submitData.append("budget", formData.budget);
-      submitData.append("timeline", formData.timeline);
-      submitData.append("description", formData.description);
+      Object.keys(formData).forEach((key) => {
+        if (key !== "file") {
+          submitData.append(key, formData[key]);
+        }
+      });
 
       if (formData.file) {
         submitData.append("file", formData.file);
       }
 
-      const res = await axios.post(
-        `${API_URL}/api/contacts`,
-        submitData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const res = await axios.post(`${API_URL}/api/contacts`, submitData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
       console.log("Saved:", res.data);
 
@@ -109,21 +98,18 @@ function Contact() {
       setTimeout(() => {
         setSuccess(false);
       }, 3000);
-
     } catch (error) {
       console.log("Upload Error:", error);
-      alert("Something went wrong.");
+      alert(error.response?.data?.message || "Server error. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <main className="start-project-page">
-      {/* LEFT SIDE */}
-
       <section className="project-left">
-        <span className="project-badge">
-          🚀 Start a Project
-        </span>
+        <span className="project-badge">🚀 Start a Project</span>
 
         <h1>
           Let’s Build <br />
@@ -132,8 +118,7 @@ function Contact() {
         </h1>
 
         <p>
-          Tell us about your project and we’ll
-          bring your idea to life with the
+          Tell us about your project and we’ll bring your idea to life with the
           perfect solution.
         </p>
 
@@ -158,15 +143,9 @@ function Contact() {
         </div>
 
         <div className="project-illustration">
-          <img
-            src="/contactbg.png"
-            alt="Project"
-            className="project-image"
-          />
+          <img src="/contactbg.png" alt="Project" className="project-image" />
         </div>
       </section>
-
-      {/* RIGHT SIDE */}
 
       <section className="project-form-card">
         <div className="form-title">
@@ -176,32 +155,19 @@ function Contact() {
 
           <div>
             <h2>Start a Project</h2>
-
-            <p>
-              Fill out the form below and our
-              team will get back to you soon.
-            </p>
+            <p>Fill out the form below and our team will get back to you soon.</p>
           </div>
         </div>
 
         {success && (
-          <div className="form-success">
-            ✅ Project submitted successfully!
-          </div>
+          <div className="form-success">✅ Project submitted successfully!</div>
         )}
 
-        <form
-          className="project-form"
-          onSubmit={handleSubmit}
-        >
-          {/* NAME */}
-
+        <form className="project-form" onSubmit={handleSubmit}>
           <div className="project-input">
             <label>Full Name *</label>
-
             <div>
               <User size={20} />
-
               <input
                 type="text"
                 name="fullName"
@@ -213,14 +179,10 @@ function Contact() {
             </div>
           </div>
 
-          {/* EMAIL */}
-
           <div className="project-input">
             <label>Email Address *</label>
-
             <div>
               <Mail size={20} />
-
               <input
                 type="email"
                 name="email"
@@ -232,36 +194,29 @@ function Contact() {
             </div>
           </div>
 
-          {/* PHONE */}
-
           <div className="project-input">
             <label>Phone Number *</label>
-
             <div>
               <Phone size={20} />
-
               <input
-                type="text"
+                type="tel"
                 name="phone"
-                placeholder="+91 9876543210"
+                placeholder="9876543210"
                 value={formData.phone}
                 onChange={handleChange}
                 required
+                pattern="[0-9]{10}"
+                title="Enter a valid 10-digit phone number"
               />
             </div>
           </div>
 
-          {/* COMPANY */}
-
           <div className="project-input wide">
             <label>
-              Company Name
-              <span> (Optional)</span>
+              Company Name <span>(Optional)</span>
             </label>
-
             <div>
               <Building2 size={20} />
-
               <input
                 type="text"
                 name="company"
@@ -272,113 +227,65 @@ function Contact() {
             </div>
           </div>
 
-          {/* PROJECT TYPE */}
-
           <div className="project-input">
             <label>Project Type *</label>
-
             <div>
               <Briefcase size={20} />
-
               <select
                 name="projectType"
                 value={formData.projectType}
                 onChange={handleChange}
                 required
               >
-                <option value="">
-                  Select project type
-                </option>
-
-                <option>
-                  Website Development
-                </option>
-
-                <option>
-                  Full Stack Application
-                </option>
-
-                <option>
-                  E-commerce Website
-                </option>
-
-                <option>
-                  UI/UX Design
-                </option>
+                <option value="">Select project type</option>
+                <option value="Website Development">Website Development</option>
+                <option value="Full Stack Application">Full Stack Application</option>
+                <option value="E-commerce Website">E-commerce Website</option>
+                <option value="UI/UX Design">UI/UX Design</option>
               </select>
             </div>
           </div>
 
-          {/* BUDGET */}
-
           <div className="project-input">
             <label>Budget Range *</label>
-
             <div>
               <Wallet size={20} />
-
               <select
                 name="budget"
                 value={formData.budget}
                 onChange={handleChange}
                 required
               >
-                <option value="">
-                  Select budget
-                </option>
-
-                <option>
-                  ₹5,000 - ₹15,000
-                </option>
-
-                <option>
-                  ₹15,000 - ₹50,000
-                </option>
-
-                <option>
-                  ₹50,000+
-                </option>
+                <option value="">Select budget</option>
+                <option value="₹5,000 - ₹15,000">₹5,000 - ₹15,000</option>
+                <option value="₹15,000 - ₹50,000">₹15,000 - ₹50,000</option>
+                <option value="₹50,000+">₹50,000+</option>
               </select>
             </div>
           </div>
 
-          {/* TIMELINE */}
-
           <div className="project-input">
             <label>Project Timeline *</label>
-
             <div>
               <CalendarDays size={20} />
-
               <select
                 name="timeline"
                 value={formData.timeline}
                 onChange={handleChange}
                 required
               >
-                <option value="">
-                  Select timeline
-                </option>
-
-                <option>1 Week</option>
-
-                <option>2 - 4 Weeks</option>
-
-                <option>1 - 3 Months</option>
+                <option value="">Select timeline</option>
+                <option value="1 Week">1 Week</option>
+                <option value="2 - 4 Weeks">2 - 4 Weeks</option>
+                <option value="1 - 3 Months">1 - 3 Months</option>
               </select>
             </div>
           </div>
 
-          {/* DESCRIPTION */}
-
           <div className="project-input full">
-            <label>
-              Project Description *
-            </label>
-
+            <label>Project Description *</label>
             <div className="textarea-box">
               <Pencil size={20} />
-
               <textarea
                 name="description"
                 placeholder="Tell us about your project..."
@@ -389,48 +296,35 @@ function Contact() {
             </div>
           </div>
 
-          {/* FILE */}
-
           <div className="file-upload full">
             <Paperclip />
 
             <div>
               <h4>
-                File Upload
-                <span> (Optional)</span>
+                File Upload <span>(Optional)</span>
               </h4>
-
-              <p>
-                {fileName ||
-                  "Upload PDF, DOC, ZIP etc"}
-              </p>
+              <p>{fileName || "Upload PDF, DOC, ZIP etc"}</p>
             </div>
 
             <label className="choose-file-btn">
               Choose File
-
               <input
                 type="file"
                 hidden
+                accept=".pdf,.doc,.docx,.zip,.png,.jpg,.jpeg"
                 onChange={handleFileChange}
               />
             </label>
           </div>
 
-          {/* SUBMIT */}
-
-          <button
-            className="start-project-btn"
-            type="submit"
-          >
+          <button className="start-project-btn" type="submit" disabled={loading}>
             <Send size={20} />
-            Start Project
+            {loading ? "Submitting..." : "Start Project"}
           </button>
         </form>
 
         <p className="safe-text">
-          🛡 Your information is secure and
-          will never be shared.
+          🛡 Your information is secure and will never be shared.
         </p>
       </section>
     </main>
