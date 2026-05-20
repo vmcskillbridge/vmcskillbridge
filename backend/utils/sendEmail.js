@@ -1,4 +1,8 @@
-const nodemailer = require("nodemailer");
+const { Resend } = require("resend");
+
+const resend = new Resend(
+  process.env.RESEND_API_KEY
+);
 
 const sendEmail = async ({
   to,
@@ -6,40 +10,20 @@ const sendEmail = async ({
   html,
 }) => {
   try {
-    const transporter =
-      nodemailer.createTransport({
-        host: "smtp.gmail.com",
-        port: 587,
-        secure: false,
-
-        auth: {
-          user: process.env.EMAIL_USER,
-          pass: process.env.EMAIL_PASS,
-        },
-
-        tls: {
-          rejectUnauthorized: false,
-        },
-
-        family: 4,
-      });
-
-    const info =
-      await transporter.sendMail({
-        from: `"VMC SkillBridge" <${process.env.EMAIL_USER}>`,
+    const data =
+      await resend.emails.send({
+        from:
+          "VMC SkillBridge <onboarding@resend.dev>",
         to,
         subject,
         html,
       });
 
-    console.log(
-      "EMAIL SENT:",
-      info.response
-    );
+    console.log("EMAIL SENT:", data);
   } catch (error) {
     console.log(
       "EMAIL ERROR:",
-      error.message
+      error
     );
   }
 };
