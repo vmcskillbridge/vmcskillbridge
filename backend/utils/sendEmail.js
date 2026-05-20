@@ -1,26 +1,46 @@
 const nodemailer = require("nodemailer");
 
-const sendEmail = async ({ to, subject, html }) => {
+const sendEmail = async ({
+  to,
+  subject,
+  html,
+}) => {
   try {
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
+    const transporter =
+      nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 587,
+        secure: false,
 
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
+        auth: {
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASS,
+        },
 
-    const info = await transporter.sendMail({
-      from: `"VMC SkillBridge" <${process.env.EMAIL_USER}>`,
-      to,
-      subject,
-      html,
-    });
+        tls: {
+          rejectUnauthorized: false,
+        },
 
-    console.log("EMAIL SENT:", info.response);
+        family: 4,
+      });
+
+    const info =
+      await transporter.sendMail({
+        from: `"VMC SkillBridge" <${process.env.EMAIL_USER}>`,
+        to,
+        subject,
+        html,
+      });
+
+    console.log(
+      "EMAIL SENT:",
+      info.response
+    );
   } catch (error) {
-    console.log("EMAIL ERROR:", error);
+    console.log(
+      "EMAIL ERROR:",
+      error.message
+    );
   }
 };
 
