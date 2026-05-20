@@ -155,7 +155,7 @@ function Careers() {
         <div className="career-stat-card">
           <Users />
           <div>
-            <h3>50+</h3>
+            <h3>30+</h3>
             <p>Team Members</p>
           </div>
         </div>
@@ -163,7 +163,7 @@ function Careers() {
         <div className="career-stat-card">
           <UserRound />
           <div>
-            <h3>10+</h3>
+            <h3>5+</h3>
             <p>Open Positions</p>
           </div>
         </div>
@@ -171,7 +171,7 @@ function Careers() {
         <div className="career-stat-card">
           <Users />
           <div>
-            <h3>5+</h3>
+            <h3>10+</h3>
             <p>Years of Excellence</p>
           </div>
         </div>

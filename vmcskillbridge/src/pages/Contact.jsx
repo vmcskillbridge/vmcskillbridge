@@ -132,7 +132,7 @@ function Contact() {
           <div className="project-contact-card">
             <Phone />
             <h3>Call Us</h3>
-            <p>+91 8919728736</p>
+            <p>+91 9876543210</p>
           </div>
 
           <div className="project-contact-card">
