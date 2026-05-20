@@ -11,6 +11,7 @@ import Contact from "./pages/Contact";
 import AdminLogin from "./admin/AdminLogin";
 import AdminDashboard from "./admin/AdminDashboard";
 import AddProject from "./admin/AddProject";
+import Chatbot from "./components/Chatbot";
 
 function Layout() {
   const location = useLocation();
@@ -39,6 +40,7 @@ function Layout() {
       
 
       {!isAdminPage && <Footer />}
+      {!isAdminPage && <Chatbot />}
     </>
   );
 }
