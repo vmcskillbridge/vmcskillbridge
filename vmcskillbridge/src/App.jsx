@@ -10,6 +10,7 @@ import Contact from "./pages/Contact";
 
 import AdminLogin from "./admin/AdminLogin";
 import AdminDashboard from "./admin/AdminDashboard";
+import AddProject from "./admin/AddProject";
 
 function Layout() {
   const location = useLocation();
@@ -33,6 +34,10 @@ function Layout() {
           element={<AdminDashboard />}
         />
       </Routes>
+      <Route
+  path="/admin/add-project"
+  element={<AddProject />}
+/>
 
       {!isAdminPage && <Footer />}
     </>
