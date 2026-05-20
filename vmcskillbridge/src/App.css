@@ -2178,3 +2178,33 @@ section {
     font-size: 20px;
   }
 }
+
+@media (max-width: 768px) {
+  .why-choose-section {
+    padding-left: 18px;
+    padding-right: 18px;
+    overflow-x: hidden;
+  }
+
+  .reasons-grid {
+    width: 100%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .reason-card {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+  }
+}
+@media (max-width: 768px) {
+  .app,
+  body,
+  html {
+    width: 100%;
+    overflow-x: hidden;
+  }
+}
