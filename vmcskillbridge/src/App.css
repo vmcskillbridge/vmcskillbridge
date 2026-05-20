@@ -2152,3 +2152,29 @@ section {
     line-height: 1.7;
   }
 }
+
+@media (max-width: 768px) {
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .service-card {
+    padding: 18px 12px;
+  }
+
+  .service-card h3 {
+    font-size: 13px;
+  }
+
+  .service-card p {
+    display: none;
+  }
+
+  .service-icon {
+    width: 46px;
+    height: 46px;
+    font-size: 20px;
+  }
+}
