@@ -1800,3 +1800,80 @@ section {
   border: none;
   cursor: pointer;
 }
+
+
+
+
+/* FINAL MOBILE RESPONSIVE FIXES */
+
+@media (max-width: 768px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  .hero {
+    min-height: auto;
+    padding: 70px 18px;
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .hero-title {
+    font-size: 36px;
+  }
+
+  .hero-visual {
+    min-height: 280px;
+  }
+
+  .hero-visual img {
+    height: 240px;
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .projects-slider {
+    overflow-x: auto;
+    scroll-behavior: smooth;
+  }
+
+  .projects-grid {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    gap: 18px;
+    transform: none !important;
+  }
+
+  .project-card {
+    flex: 0 0 85% !important;
+    min-width: 85% !important;
+  }
+
+  .project-image {
+    height: 190px;
+  }
+
+  .reasons-grid,
+  .culture-grid,
+  .dashboard-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .start-project-page {
+    grid-template-columns: 1fr;
+  }
+
+  .project-contact-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-content {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-table {
+    overflow-x: auto;
+  }
+}
