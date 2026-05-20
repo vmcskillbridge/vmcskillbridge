@@ -33,11 +33,10 @@ function Layout() {
           path="/admin/dashboard"
           element={<AdminDashboard />}
         />
+        <Route path="/admin/add-project" element={<AddProject />}
+        />
       </Routes>
-      <Route
-  path="/admin/add-project"
-  element={<AddProject />}
-/>
+      
 
       {!isAdminPage && <Footer />}
     </>
