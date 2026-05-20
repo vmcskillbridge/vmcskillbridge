@@ -3,6 +3,7 @@ const multer = require("multer");
 const path = require("path");
 
 const Application = require("../models/Application");
+const sendEmail = require("../utils/sendEmail");
 
 const router = express.Router();
 
@@ -79,6 +80,72 @@ router.post(
             ? `/uploads/${req.file.filename}`
             : "",
         });
+
+      /* SEND EMAIL WITHOUT BLOCKING RESPONSE */
+
+      sendEmail({
+        to: req.body.email,
+
+        subject:
+          "Application Received - VMC SkillBridge",
+
+        html: `
+          <div style="font-family: Arial; padding: 30px; background:#0b0b18; color:white;">
+            
+            <h1 style="color:#8b5cf6;">
+              VMC SkillBridge
+            </h1>
+
+            <h2>
+              Application Received Successfully
+            </h2>
+
+            <p>
+              Dear <b>${req.body.fullName}</b>,
+            </p>
+
+            <p>
+              Thank you for applying for the 
+              <b>${req.body.position}</b> role at 
+              VMC SkillBridge.
+            </p>
+
+            <p>
+              Our hiring team will review your 
+              application and contact you if shortlisted.
+            </p>
+
+            <div style="margin-top:30px; padding:20px; background:#151528; border-radius:12px;">
+              
+              <p>
+                <b>Position:</b> ${req.body.position}
+              </p>
+
+              <p>
+                <b>Experience:</b> ${req.body.experience}
+              </p>
+
+              <p>
+                <b>Status:</b> Received
+              </p>
+            </div>
+
+            <p style="margin-top:30px;">
+              Best Regards,
+            </p>
+
+            <b>
+              VMC SkillBridge Hiring Team
+            </b>
+
+          </div>
+        `,
+      }).catch((err) => {
+        console.log(
+          "Email failed:",
+          err.message
+        );
+      });
 
       res.status(201).json({
         success: true,
