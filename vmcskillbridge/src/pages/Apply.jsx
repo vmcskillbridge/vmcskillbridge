@@ -17,9 +17,14 @@ import {
   ArrowRight,
 } from "lucide-react";
 
+const API_URL =
+  import.meta.env.VITE_API_URL ||
+  "https://vmcskillbridge.onrender.com";
+
 function Apply() {
   const [submitted, setSubmitted] = useState(false);
   const [resumeName, setResumeName] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -43,18 +48,24 @@ function Apply() {
   const handleResumeChange = (e) => {
     const file = e.target.files[0];
 
-    if (file) {
-      setResumeName(file.name);
+    if (!file) return;
 
-      setFormData({
-        ...formData,
-        resume: file,
-      });
+    if (file.size > 5 * 1024 * 1024) {
+      alert("Resume size must be less than 5MB.");
+      return;
     }
+
+    setResumeName(file.name);
+
+    setFormData({
+      ...formData,
+      resume: file,
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       const submitData = new FormData();
@@ -72,20 +83,18 @@ function Apply() {
         submitData.append("resume", formData.resume);
       }
 
-      await axios.post(
-        "http://localhost:5000/api/applications",
-        submitData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      await axios.post(`${API_URL}/api/applications`, submitData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
       setSubmitted(true);
     } catch (error) {
       console.log("Application Error:", error);
-      alert("Application failed. Please try again.");
+      alert(error.response?.data?.message || "Application failed. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -143,7 +152,9 @@ function Apply() {
 
         <form className="apply-form" onSubmit={handleSubmit}>
           <div className="apply-group">
-            <label><User size={18} /> Full Name *</label>
+            <label>
+              <User size={18} /> Full Name *
+            </label>
             <input
               type="text"
               name="fullName"
@@ -155,7 +166,9 @@ function Apply() {
           </div>
 
           <div className="apply-group">
-            <label><MapPin size={18} /> Current Location *</label>
+            <label>
+              <MapPin size={18} /> Current Location *
+            </label>
             <input
               type="text"
               name="location"
@@ -167,7 +180,9 @@ function Apply() {
           </div>
 
           <div className="apply-group">
-            <label><Mail size={18} /> Email Address *</label>
+            <label>
+              <Mail size={18} /> Email Address *
+            </label>
             <input
               type="email"
               name="email"
@@ -179,7 +194,9 @@ function Apply() {
           </div>
 
           <div className="apply-group">
-            <label><LinkIcon size={18} /> Portfolio / LinkedIn URL</label>
+            <label>
+              <LinkIcon size={18} /> Portfolio / LinkedIn URL
+            </label>
             <input
               type="text"
               name="portfolio"
@@ -190,11 +207,13 @@ function Apply() {
           </div>
 
           <div className="apply-group">
-            <label><Phone size={18} /> Phone Number *</label>
+            <label>
+              <Phone size={18} /> Phone Number *
+            </label>
             <input
-              type="text"
+              type="tel"
               name="phone"
-              placeholder="+91 98765 43210"
+              placeholder="9876543210"
               value={formData.phone}
               onChange={handleChange}
               required
@@ -202,7 +221,9 @@ function Apply() {
           </div>
 
           <div className="apply-group">
-            <label><FileText size={18} /> Upload Resume *</label>
+            <label>
+              <FileText size={18} /> Upload Resume *
+            </label>
 
             <label className="resume-box">
               <FileText size={28} />
@@ -222,7 +243,9 @@ function Apply() {
           </div>
 
           <div className="apply-group">
-            <label><Briefcase size={18} /> Select Position Applied For *</label>
+            <label>
+              <Briefcase size={18} /> Select Position Applied For *
+            </label>
             <select
               name="position"
               value={formData.position}
@@ -230,16 +253,18 @@ function Apply() {
               required
             >
               <option value="">Select Position</option>
-              <option>Frontend Developer</option>
-              <option>Backend Developer</option>
-              <option>Full Stack Developer</option>
-              <option>UI/UX Designer</option>
-              <option>DevOps Engineer</option>
+              <option value="Frontend Developer">Frontend Developer</option>
+              <option value="Backend Developer">Backend Developer</option>
+              <option value="Full Stack Developer">Full Stack Developer</option>
+              <option value="UI/UX Designer">UI/UX Designer</option>
+              <option value="DevOps Engineer">DevOps Engineer</option>
             </select>
           </div>
 
           <div className="apply-group">
-            <label><PenLine size={18} /> Why should we hire you? *</label>
+            <label>
+              <PenLine size={18} /> Why should we hire you? *
+            </label>
             <textarea
               name="message"
               placeholder="I am passionate about building user-friendly, scalable web applications..."
@@ -250,7 +275,9 @@ function Apply() {
           </div>
 
           <div className="apply-group">
-            <label><Star size={18} /> Years of Experience *</label>
+            <label>
+              <Star size={18} /> Years of Experience *
+            </label>
             <select
               name="experience"
               value={formData.experience}
@@ -258,15 +285,16 @@ function Apply() {
               required
             >
               <option value="">Select Experience</option>
-              <option>0 - 1 Years</option>
-              <option>1 - 3 Years</option>
-              <option>3 - 5 Years</option>
-              <option>5+ Years</option>
+              <option value="0 - 1 Years">0 - 1 Years</option>
+              <option value="1 - 3 Years">1 - 3 Years</option>
+              <option value="3 - 5 Years">3 - 5 Years</option>
+              <option value="5+ Years">5+ Years</option>
             </select>
           </div>
 
-          <button className="submit-application" type="submit">
-            Submit Application <ArrowRight size={22} />
+          <button className="submit-application" type="submit" disabled={loading}>
+            {loading ? "Submitting..." : "Submit Application"}
+            <ArrowRight size={22} />
           </button>
         </form>
 
