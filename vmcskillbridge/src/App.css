@@ -1906,3 +1906,12 @@ section {
     max-width: 300px;
   }
 }
+
+.apply-group select {
+  color: white;
+}
+
+.apply-group select option {
+  background: #0f172a;
+  color: white;
+}
