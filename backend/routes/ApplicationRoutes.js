@@ -7,22 +7,15 @@ const sendEmail = require("../utils/sendEmail");
 
 const router = express.Router();
 
-/* STORAGE */
-
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads/");
   },
 
   filename: (req, file, cb) => {
-    cb(
-      null,
-      Date.now() + path.extname(file.originalname)
-    );
+    cb(null, Date.now() + path.extname(file.originalname));
   },
 });
-
-/* FILE FILTER */
 
 const fileFilter = (req, file, cb) => {
   const allowedTypes = [
@@ -34,142 +27,120 @@ const fileFilter = (req, file, cb) => {
   if (allowedTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
-    cb(
-      new Error(
-        "Only PDF, DOC and DOCX files are allowed"
-      ),
-      false
-    );
+    cb(new Error("Only PDF, DOC and DOCX files are allowed"), false);
   }
 };
-
-/* MULTER */
 
 const upload = multer({
   storage,
   fileFilter,
-
   limits: {
     fileSize: 5 * 1024 * 1024,
   },
 });
 
-/* SUBMIT APPLICATION */
+router.post("/", upload.single("resume"), async (req, res) => {
+  try {
+    const application = await Application.create({
+      fullName: req.body.fullName,
+      location: req.body.location,
+      email: req.body.email,
+      portfolio: req.body.portfolio,
+      phone: req.body.phone,
+      position: req.body.position,
+      message: req.body.message,
+      experience: req.body.experience,
+      status: "Pending",
 
-router.post(
-  "/",
-  upload.single("resume"),
-  async (req, res) => {
-    try {
-      const application =
-        await Application.create({
-          fullName: req.body.fullName,
-          location: req.body.location,
-          email: req.body.email,
-          portfolio: req.body.portfolio,
-          phone: req.body.phone,
-          position: req.body.position,
-          message: req.body.message,
-          experience: req.body.experience,
+      fileName: req.file ? req.file.filename : "",
+      fileUrl: req.file ? `/uploads/${req.file.filename}` : "",
+    });
 
-          fileName: req.file
-            ? req.file.filename
-            : "",
+    await sendEmail({
+      to: req.body.email,
+      subject: "Application Received - VMC SkillBridge",
+      html: `
+        <div style="font-family: Arial; padding: 25px; line-height:1.7;">
+          <h2>VMC SkillBridge</h2>
 
-          fileUrl: req.file
-            ? `/uploads/${req.file.filename}`
-            : "",
-        });
+          <p>Dear <b>${req.body.fullName}</b>,</p>
 
-      /* SEND EMAIL WITHOUT BLOCKING RESPONSE */
+          <p>
+            Thank you for applying for <b>${req.body.position}</b>.
+          </p>
 
-      sendEmail({
-        to: req.body.email,
+          <p>
+            Your application has been received successfully.
+          </p>
 
-        subject:
-          "Application Received - VMC SkillBridge",
+          <p>
+            Our recruitment team will review your profile shortly.
+          </p>
 
-        html: `
-          <div style="font-family: Arial; padding: 30px; background:#0b0b18; color:white;">
-            
-            <h1 style="color:#8b5cf6;">
-              VMC SkillBridge
-            </h1>
+          <p>
+            Best regards,<br/>
+            VMC SkillBridge Team
+          </p>
+        </div>
+      `,
+    });
 
-            <h2>
-              Application Received Successfully
-            </h2>
+    setTimeout(async () => {
+      try {
+        await sendEmail({
+          to: req.body.email,
+          subject: "Application Shortlisted - VMC SkillBridge",
+          html: `
+            <div style="font-family: Arial; padding: 25px; line-height:1.7;">
+              <h2>VMC SkillBridge</h2>
 
-            <p>
-              Dear <b>${req.body.fullName}</b>,
-            </p>
+              <p>Dear Applicant,</p>
 
-            <p>
-              Thank you for applying for the 
-              <b>${req.body.position}</b> role at 
-              VMC SkillBridge.
-            </p>
-
-            <p>
-              Our hiring team will review your 
-              application and contact you if shortlisted.
-            </p>
-
-            <div style="margin-top:30px; padding:20px; background:#151528; border-radius:12px;">
-              
               <p>
-                <b>Position:</b> ${req.body.position}
+                We are pleased to inform you that your application has been
+                successfully shortlisted for the next stage at VMC SkillBridge.
               </p>
 
               <p>
-                <b>Experience:</b> ${req.body.experience}
+                Our team will contact you shortly with further details regarding
+                the interview process and next steps.
               </p>
 
               <p>
-                <b>Status:</b> Received
+                Thank you for your interest in joining VMC SkillBridge.
+              </p>
+
+              <p>
+                Best regards,<br/>
+                VMC SkillBridge Team
               </p>
             </div>
+          `,
+        });
+      } catch (error) {
+        console.log("Delayed shortlisted mail error:", error.message);
+      }
+    }, 5 * 60 * 1000);
 
-            <p style="margin-top:30px;">
-              Best Regards,
-            </p>
+    res.status(201).json({
+      success: true,
+      application,
+    });
+  } catch (error) {
+    console.log("Application submit error:", error);
 
-            <b>
-              VMC SkillBridge Hiring Team
-            </b>
-
-          </div>
-        `,
-      }).catch((err) => {
-        console.log(
-          "Email failed:",
-          err.message
-        );
-      });
-
-      res.status(201).json({
-        success: true,
-        application,
-      });
-    } catch (error) {
-      console.log(error);
-
-      res.status(500).json({
-        success: false,
-        message: error.message,
-      });
-    }
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
   }
-);
-
-/* GET APPLICATIONS */
+});
 
 router.get("/", async (req, res) => {
   try {
-    const applications =
-      await Application.find().sort({
-        createdAt: -1,
-      });
+    const applications = await Application.find().sort({
+      createdAt: -1,
+    });
 
     res.json({
       success: true,
@@ -183,29 +154,16 @@ router.get("/", async (req, res) => {
   }
 });
 
-/* DELETE APPLICATION */
-
-router.delete("/:id", async (req, res) => {
-  try {
-    await Application.findByIdAndDelete(
-      req.params.id
-    );
-
-    res.json({
-      success: true,
-      message: "Application deleted",
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-  }
-});
-
 router.put("/:id/status", async (req, res) => {
   try {
     const { status } = req.body;
+
+    if (!["Accepted", "Rejected", "Pending"].includes(status)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid status",
+      });
+    }
 
     const application = await Application.findByIdAndUpdate(
       req.params.id,
@@ -213,18 +171,55 @@ router.put("/:id/status", async (req, res) => {
       { new: true }
     );
 
+    if (!application) {
+      return res.status(404).json({
+        success: false,
+        message: "Application not found",
+      });
+    }
+
+    const isAccepted = status === "Accepted";
+
     await sendEmail({
       to: application.email,
-      subject:
-        status === "Accepted"
-          ? "Application Accepted - VMC SkillBridge"
-          : "Application Update - VMC SkillBridge",
+      subject: isAccepted
+        ? "Application Accepted - VMC SkillBridge"
+        : "Application Update - VMC SkillBridge",
       html: `
-        <div style="font-family: Arial; padding: 25px;">
-          <h2>VMC SkillBridge</h2>
+        <div style="font-family: Arial; padding: 25px; line-height: 1.7;">
+          <h2 style="color:#2563eb;">VMC SkillBridge</h2>
+
           <p>Dear <b>${application.fullName}</b>,</p>
-          <p>Your application for <b>${application.position}</b> has been <b>${status}</b>.</p>
-          <p>Best regards,<br/>VMC SkillBridge Team</p>
+
+          ${
+            isAccepted
+              ? `
+              <p>
+                We are pleased to inform you that your application for 
+                <b>${application.position}</b> has been <b>Accepted</b>.
+              </p>
+              <p>
+                Our team will contact you shortly with the next steps.
+              </p>
+            `
+              : `
+              <p>
+                Thank you for applying for <b>${application.position}</b> at VMC SkillBridge.
+              </p>
+              <p>
+                After careful review, we regret to inform you that your application
+                has been <b>Rejected</b> at this time.
+              </p>
+              <p>
+                We appreciate your interest and encourage you to apply again for future opportunities.
+              </p>
+            `
+          }
+
+          <p>
+            Best regards,<br/>
+            <b>VMC SkillBridge Team</b>
+          </p>
         </div>
       `,
     });
@@ -232,6 +227,24 @@ router.put("/:id/status", async (req, res) => {
     res.json({
       success: true,
       application,
+    });
+  } catch (error) {
+    console.log("Status update error:", error);
+
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
+router.delete("/:id", async (req, res) => {
+  try {
+    await Application.findByIdAndDelete(req.params.id);
+
+    res.json({
+      success: true,
+      message: "Application deleted",
     });
   } catch (error) {
     res.status(500).json({
