@@ -203,4 +203,42 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+router.put("/:id/status", async (req, res) => {
+  try {
+    const { status } = req.body;
+
+    const application = await Application.findByIdAndUpdate(
+      req.params.id,
+      { status },
+      { new: true }
+    );
+
+    await sendEmail({
+      to: application.email,
+      subject:
+        status === "Accepted"
+          ? "Application Accepted - VMC SkillBridge"
+          : "Application Update - VMC SkillBridge",
+      html: `
+        <div style="font-family: Arial; padding: 25px;">
+          <h2>VMC SkillBridge</h2>
+          <p>Dear <b>${application.fullName}</b>,</p>
+          <p>Your application for <b>${application.position}</b> has been <b>${status}</b>.</p>
+          <p>Best regards,<br/>VMC SkillBridge Team</p>
+        </div>
+      `,
+    });
+
+    res.json({
+      success: true,
+      application,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
 module.exports = router;

@@ -2,18 +2,49 @@ const mongoose = require("mongoose");
 
 const applicationSchema = new mongoose.Schema(
   {
-    fullName: String,
-    location: String,
-    email: String,
-    portfolio: String,
-    phone: String,
-    position: String,
-    message: String,
-    experience: String,
-    fileName: String,
-    fileUrl: String,
+    fullName: {
+      type: String,
+      required: true,
+    },
+
+    email: {
+      type: String,
+      required: true,
+    },
+
+    phone: {
+      type: String,
+      required: true,
+    },
+
+    position: {
+      type: String,
+      required: true,
+    },
+
+    experience: {
+      type: String,
+    },
+
+    resume: {
+      type: String,
+    },
+
+    coverLetter: {
+      type: String,
+    },
+
+    status: {
+      type: String,
+      default: "Pending",
+    },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
 
-module.exports = mongoose.model("Application", applicationSchema);
+module.exports = mongoose.model(
+  "Application",
+  applicationSchema
+);
