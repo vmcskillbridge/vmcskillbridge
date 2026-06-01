@@ -1,120 +1,59 @@
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  useLocation,
-} from "react-router-dom";
+import { motion } from "framer-motion";
 
-import {
-  useEffect,
-  useState,
-} from "react";
+import Hero from "../components/Hero";
+import Services from "../components/Services";
+import Projects from "../components/Projects";
+import WhyChoose from "../components/WhyChoose";
+import CTA from "../components/CTA";
 
-import AOS from "aos";
-
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
-import Chatbot from "./components/Chatbot";
-import Loader from "./components/Loader";
-
-import Home from "./pages/Home";
-import Careers from "./pages/Careers";
-import Apply from "./pages/Apply";
-import Contact from "./pages/Contact";
-
-import AdminLogin from "./admin/AdminLogin";
-import AdminDashboard from "./admin/AdminDashboard";
-import AddProject from "./admin/AddProject";
-import ProtectedAdminRoute from "./admin/ProtectedAdminRoute";
-
-function Layout() {
-  const location = useLocation();
-
-  const isAdminPage =
-    location.pathname.startsWith("/admin");
-
+function Home() {
   return (
     <>
-      {!isAdminPage && <Navbar />}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6 }}
+      >
+        <Hero />
+      </motion.div>
 
-      <Routes>
-        <Route path="/" element={<Home />} />
+      <motion.div
+        initial={{ opacity: 0, y: 80 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.8 }}
+      >
+        <Services />
+      </motion.div>
 
-        <Route
-          path="/careers"
-          element={<Careers />}
-        />
+      <motion.div
+        initial={{ opacity: 0, y: 80 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.8 }}
+      >
+        <Projects />
+      </motion.div>
 
-        <Route
-          path="/apply"
-          element={<Apply />}
-        />
+      <motion.div
+        initial={{ opacity: 0, x: -80 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.8 }}
+      >
+        <WhyChoose />
+      </motion.div>
 
-        <Route
-          path="/contact"
-          element={<Contact />}
-        />
-
-        <Route
-          path="/admin"
-          element={<AdminLogin />}
-        />
-
-        <Route
-          path="/admin/dashboard"
-          element={
-            <ProtectedAdminRoute>
-              <AdminDashboard />
-            </ProtectedAdminRoute>
-          }
-        />
-
-        <Route
-          path="/admin/add-project"
-          element={
-            <ProtectedAdminRoute>
-              <AddProject />
-            </ProtectedAdminRoute>
-          }
-        />
-      </Routes>
-
-      {!isAdminPage && <Footer />}
-
-      {!isAdminPage && <Chatbot />}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.92 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true, amount: 0.25 }}
+        transition={{ duration: 0.8 }}
+      >
+        <CTA />
+      </motion.div>
     </>
   );
 }
 
-function App() {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    AOS.init({
-      duration: 800,
-      easing: "ease-out",
-      once: true,
-      offset: 80,
-    });
-
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 1200);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (loading) {
-    return <Loader />;
-  }
-
-  return (
-    <BrowserRouter>
-      <div className="app">
-        <Layout />
-      </div>
-    </BrowserRouter>
-  );
-}
-
-export default App;
+export default Home;
