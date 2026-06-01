@@ -2415,3 +2415,100 @@ section {
     #2563eb
   );
 }
+
+
+
+/* Premium Mobile Scroll + Glow Effects */
+
+.service-card,
+.project-card,
+.reason-card,
+.cta {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border 0.35s ease;
+}
+
+.service-card::before,
+.project-card::before,
+.reason-card::before,
+.cta::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(72, 120, 255, 0.18), transparent 40%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.service-card:hover,
+.project-card:hover,
+.reason-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 25px 60px rgba(72, 120, 255, 0.22);
+  border-color: rgba(120, 160, 255, 0.45);
+}
+
+.service-card:hover::before,
+.project-card:hover::before,
+.reason-card:hover::before,
+.cta:hover::before {
+  opacity: 1;
+}
+
+.service-icon,
+.reason-icon {
+  transition: transform 0.35s ease, filter 0.35s ease;
+}
+
+.service-card:hover .service-icon,
+.reason-card:hover .reason-icon {
+  transform: scale(1.18) rotate(5deg);
+  filter: drop-shadow(0 0 14px rgba(72, 120, 255, 0.7));
+}
+
+.project-card-image {
+  transition: transform 0.5s ease;
+}
+
+.project-card:hover .project-card-image {
+  transform: scale(1.08);
+}
+
+.hero-btn,
+.tab-btn,
+.carousel-btn {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.hero-btn:hover,
+.tab-btn:hover,
+.carousel-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px rgba(72, 120, 255, 0.3);
+}
+
+/* Mobile smooth feel */
+@media (max-width: 768px) {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  .service-card,
+  .project-card,
+  .reason-card,
+  .cta {
+    transform: translateZ(0);
+    will-change: transform, opacity;
+  }
+
+  .service-card:hover,
+  .project-card:hover,
+  .reason-card:hover {
+    transform: translateY(-6px) scale(1.01);
+  }
+}

@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+
 function WhyChoose() {
   const reasons = [
     {
@@ -24,21 +26,44 @@ function WhyChoose() {
 
   return (
     <section className="why-choose-section" id="about">
-      <div className="section-label">WHY CHOOSE US</div>
+      <motion.div
+        className="section-label"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+      >
+        WHY CHOOSE US
+      </motion.div>
 
-      <h2 className="section-title">
+      <motion.h2
+        className="section-title"
+        initial={{ opacity: 0, y: 35 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.7 }}
+      >
         We Deliver More Than Expected
-      </h2>
+      </motion.h2>
 
       <div className="reasons-grid">
         {reasons.map((item, index) => (
-          <div className="reason-card" key={index}>
+          <motion.div
+            className="reason-card"
+            key={index}
+            initial={{ opacity: 0, y: 60, scale: 0.95 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, amount: 0.25 }}
+            transition={{
+              duration: 0.65,
+              delay: index * 0.12,
+              ease: "easeOut",
+            }}
+          >
             <div className="reason-icon">{item.icon}</div>
-
             <h3>{item.title}</h3>
-
             <p>{item.desc}</p>
-          </div>
+          </motion.div>
         ))}
       </div>
     </section>
