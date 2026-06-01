@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
 import axios from "axios";
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -13,12 +12,7 @@ function Projects() {
     const fetchProjects = async () => {
       try {
         const res = await axios.get(`${API_URL}/api/projects`);
-
-        const projectData = Array.isArray(res.data?.projects)
-          ? res.data.projects
-          : [];
-
-        setProjects(projectData);
+        setProjects(Array.isArray(res.data.projects) ? res.data.projects : []);
       } catch (error) {
         console.log("Error fetching projects:", error);
         setProjects([]);
@@ -28,17 +22,13 @@ function Projects() {
     fetchProjects();
   }, []);
 
-  const safeProjects = Array.isArray(projects) ? projects : [];
-
   const filteredProjects =
     activeCategory === "all"
-      ? safeProjects
-      : safeProjects.filter(
-          (project) => project.category === activeCategory
-        );
+      ? projects
+      : projects.filter((project) => project.category === activeCategory);
 
   const nextProject = () => {
-    if (!filteredProjects || filteredProjects.length === 0) return;
+    if (filteredProjects.length === 0) return;
 
     setCurrentIndex((prev) =>
       prev === filteredProjects.length - 1 ? 0 : prev + 1
@@ -46,7 +36,7 @@ function Projects() {
   };
 
   const prevProject = () => {
-    if (!filteredProjects || filteredProjects.length === 0) return;
+    if (filteredProjects.length === 0) return;
 
     setCurrentIndex((prev) =>
       prev === 0 ? filteredProjects.length - 1 : prev - 1
@@ -60,33 +50,11 @@ function Projects() {
 
   return (
     <section className="projects-section" id="projects">
-      <motion.div
-        className="section-label"
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-      >
-        OUR PROJECTS
-      </motion.div>
+      <div className="section-label">OUR PROJECTS</div>
 
-      <motion.h2
-        className="section-title"
-        initial={{ opacity: 0, y: 35 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.7 }}
-      >
-        Work That Speaks
-      </motion.h2>
+      <h2 className="section-title">Work That Speaks</h2>
 
-      <motion.div
-        className="projects-tabs"
-        initial={{ opacity: 0, y: 35 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.7 }}
-      >
+      <div className="projects-tabs">
         <button
           className={`tab-btn ${activeCategory === "all" ? "active" : ""}`}
           onClick={() => handleFilter("all")}
@@ -116,72 +84,48 @@ function Projects() {
         >
           E-commerce
         </button>
-      </motion.div>
+      </div>
 
       {filteredProjects.length === 0 ? (
         <p className="section-subtitle">No projects found.</p>
       ) : (
         <>
-          <motion.div
-            className="projects-slider"
-            initial={{ opacity: 0, y: 70 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.25 }}
-            transition={{ duration: 0.8 }}
-          >
+          <div className="projects-slider">
             <div
               className="projects-grid"
               style={{
                 transform: `translateX(-${currentIndex * 100}%)`,
               }}
             >
-              {filteredProjects.map((project, index) => (
-                <motion.div
-                  className="project-card"
-                  key={project._id || index}
-                  initial={{ opacity: 0, scale: 0.94 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true, amount: 0.25 }}
-                  transition={{ duration: 0.6 }}
-                >
+              {filteredProjects.map((project) => (
+                <div className="project-card" key={project._id}>
                   <div className="project-image">
                     <img
-                      src={project.image || ""}
-                      alt={project.title || "Project"}
+                      src={project.image}
+                      alt={project.title}
                       className="project-card-image"
                     />
                   </div>
 
                   <div className="project-info">
-                    <div className="project-title">
-                      {project.title || "Untitled Project"}
-                    </div>
+                    <div className="project-title">{project.title}</div>
 
                     <div className="project-tech">
-                      {Array.isArray(project.tech) &&
-                        project.tech.map((item, i) => (
-                          <span className="tech-tag" key={i}>
-                            {item}
-                          </span>
-                        ))}
+                      {project.tech?.map((item, i) => (
+                        <span className="tech-tag" key={i}>
+                          {item}
+                        </span>
+                      ))}
                     </div>
                   </div>
 
-                  <p className="project-desc">
-                    {project.description || "No description available."}
-                  </p>
-                </motion.div>
+                  <p className="project-desc">{project.description}</p>
+                </div>
               ))}
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            className="carousel-controls"
-            initial={{ opacity: 0, y: 25 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
+          <div className="carousel-controls">
             <button className="carousel-btn" onClick={prevProject}>
               ‹
             </button>
@@ -189,7 +133,7 @@ function Projects() {
             <button className="carousel-btn" onClick={nextProject}>
               ›
             </button>
-          </motion.div>
+          </div>
         </>
       )}
     </section>
