@@ -55,7 +55,6 @@ router.post("/", upload.single("resume"), async (req, res) => {
       message: req.body.message,
       experience: req.body.experience,
       status: "Pending",
-
       fileName: req.file ? req.file.filename : "",
       fileUrl: req.file ? `/uploads/${req.file.filename}` : "",
     });
@@ -64,25 +63,61 @@ router.post("/", upload.single("resume"), async (req, res) => {
       to: req.body.email,
       subject: "Application Received - VMC SkillBridge",
       html: `
-        <div style="font-family: Arial; padding: 25px; line-height:1.7;">
-          <h2 style="color:#2563eb;">VMC SkillBridge</h2>
+<div style="font-family:Arial,sans-serif;background:#f4f7fb;padding:40px 20px;">
+  <div style="max-width:700px;margin:auto;background:white;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.08);">
+    
+    <div style="background:linear-gradient(135deg,#2563eb,#7c3aed);padding:50px 30px;text-align:center;color:white;">
+      <h1 style="margin:0;font-size:36px;font-weight:700;">VMC SkillBridge</h1>
+      <p style="margin-top:12px;font-size:17px;">Where work meets skill.</p>
+    </div>
 
-          <p>Dear <b>${req.body.fullName}</b>,</p>
+    <div style="padding:40px;color:#1f2937;line-height:1.9;font-size:15px;">
+      <h2 style="margin-top:0;color:#111827;">Application Received Successfully</h2>
 
-          <p>
-            Thank you for applying for <b>${req.body.position}</b>.
-          </p>
+      <p>Dear <b>${req.body.fullName}</b>,</p>
 
-          <p>
-            Your application has been received successfully.
-            Our recruitment team will review your profile shortly.
-          </p>
+      <p>
+        Thank you for your interest in joining <b>VMC SkillBridge</b> and for applying for the role of 
+        <b>${req.body.position}</b>.
+      </p>
 
-          <p>
-            Best regards,<br/>
-            <b>VMC SkillBridge Team</b>
-          </p>
-        </div>
+      <p>
+        We are pleased to confirm that your application, resume, and submitted details have been received successfully.
+      </p>
+
+      <p>
+        Our hiring team will carefully review your profile, skills, experience, and overall suitability for the position.
+        If your profile matches our current requirements, we will contact you regarding the next stage.
+      </p>
+
+      <div style="margin-top:30px;background:#f8fafc;border:1px solid #e5e7eb;border-radius:14px;padding:28px;">
+        <h3 style="margin-top:0;color:#2563eb;">Selection Process</h3>
+
+        <p>✅ Initial Application Review</p>
+        <p>✅ Profile Shortlisting Based on Skills & Experience</p>
+        <p>✅ Technical / HR Interaction</p>
+        <p>✅ Final Discussion & Selection</p>
+        <p>✅ Offer Confirmation & Onboarding Guidance</p>
+      </div>
+
+      <div style="text-align:center;margin-top:40px;">
+        <a href="https://www.vmcskillbridge.com"
+          style="background:#2563eb;color:white;padding:15px 30px;border-radius:10px;text-decoration:none;font-weight:600;display:inline-block;">
+          Visit Our Website
+        </a>
+      </div>
+
+      <p style="margin-top:45px;">
+        We appreciate the time and effort you invested in your application and wish you the very best throughout the recruitment process.
+      </p>
+
+      <p>
+        Sincerely,<br/>
+        <b>VMC SkillBridge Hiring Team</b>
+      </p>
+    </div>
+  </div>
+</div>
       `,
     }).catch((err) => {
       console.log("Application received email failed:", err.message);
@@ -105,9 +140,7 @@ router.post("/", upload.single("resume"), async (req, res) => {
 /* GET APPLICATIONS */
 router.get("/", async (req, res) => {
   try {
-    const applications = await Application.find().sort({
-      createdAt: -1,
-    });
+    const applications = await Application.find().sort({ createdAt: -1 });
 
     res.json({
       success: true,
@@ -145,67 +178,6 @@ router.put("/:id/status", async (req, res) => {
         message: "Application not found",
       });
     }
-
-    const isAccepted = status === "Accepted";
-
-    await sendEmail({
-      to: application.email,
-      subject: isAccepted
-        ? "Application Accepted - VMC SkillBridge"
-        : "Application Update - VMC SkillBridge",
-      html: `
-        <div style="font-family: Arial; padding: 25px; line-height:1.7;">
-          <h2 style="color:#2563eb;">VMC SkillBridge</h2>
-
-          ${
-            isAccepted
-              ? `
-                <p>Dear <b>${application.fullName}</b>,</p>
-
-                <p>
-                  We are pleased to inform you that your application has been
-                  successfully shortlisted for the next stage at VMC SkillBridge.
-                </p>
-
-                <p>
-                  Our team will contact you shortly with further details regarding
-                  the interview process and next steps.
-                </p>
-
-                <p>
-                  Thank you for your interest in joining VMC SkillBridge.
-                </p>
-              `
-              : `
-                <p>Dear <b>${application.fullName}</b>,</p>
-
-                <p>
-                  Thank you for applying to VMC SkillBridge.
-                </p>
-
-                <p>
-                  After careful review, we regret to inform you that we will not
-                  be moving forward with your application at this time.
-                </p>
-
-                <p>
-                  We truly appreciate your interest in our company and encourage
-                  you to apply again for future opportunities that match your profile.
-                </p>
-
-                <p>
-                  We wish you all the best in your career journey.
-                </p>
-              `
-          }
-
-          <p>
-            Best regards,<br/>
-            <b>VMC SkillBridge Team</b>
-          </p>
-        </div>
-      `,
-    });
 
     res.json({
       success: true,
