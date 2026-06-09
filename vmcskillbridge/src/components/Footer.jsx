@@ -1,3 +1,4 @@
+import { FaYoutube } from "react-icons/fa";
 function Footer() {
   return (
     <footer className="footer">
@@ -16,14 +17,14 @@ function Footer() {
           <div className="footer-social">
 
             <a
-               className="social-icon"
-                href="https://youtube.com/@vmcskillbridge"
-               target="_blank"
-                rel="noopener noreferrer"
-                 title="YouTube"
-            >
-                   YouTube
-                    </a>
+  className="social-icon"
+  href="https://youtube.com/@vmcskillbridge"
+  target="_blank"
+  rel="noopener noreferrer"
+  title="YouTube"
+>
+  <FaYoutube />
+</a>
           </div>
         </div>
 
