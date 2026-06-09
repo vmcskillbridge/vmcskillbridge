@@ -7,9 +7,17 @@ const applicationSchema = new mongoose.Schema(
       required: true,
     },
 
+    location: {
+      type: String,
+    },
+
     email: {
       type: String,
       required: true,
+    },
+
+    portfolio: {
+      type: String,
     },
 
     phone: {
@@ -26,11 +34,15 @@ const applicationSchema = new mongoose.Schema(
       type: String,
     },
 
-    resume: {
+    message: {
       type: String,
     },
 
-    coverLetter: {
+    fileName: {
+      type: String,
+    },
+
+    fileUrl: {
       type: String,
     },
 
