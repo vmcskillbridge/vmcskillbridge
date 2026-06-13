@@ -4,21 +4,24 @@ function ScrollReveal() {
   useEffect(() => {
     const reveals = document.querySelectorAll(".reveal");
 
-    const handleScroll = () => {
-      reveals.forEach((el) => {
-        const windowHeight = window.innerHeight;
-        const top = el.getBoundingClientRect().top;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("active");
+          }
+        });
+      },
+      {
+        threshold: 0.15,
+      }
+    );
 
-        if (top < windowHeight - 100) {
-          el.classList.add("active");
-        }
-      });
+    reveals.forEach((el) => observer.observe(el));
+
+    return () => {
+      reveals.forEach((el) => observer.unobserve(el));
     };
-
-    window.addEventListener("scroll", handleScroll);
-    handleScroll();
-
-    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return null;

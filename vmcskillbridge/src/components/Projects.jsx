@@ -51,39 +51,24 @@ function Projects() {
   return (
     <section className="projects-section reveal" id="projects">
       <div className="section-label">OUR PROJECTS</div>
-
       <h2 className="section-title">Work That Speaks</h2>
 
       <div className="projects-tabs">
-        <button
-          className={`tab-btn ${activeCategory === "all" ? "active" : ""}`}
-          onClick={() => handleFilter("all")}
-        >
-          All
-        </button>
-
-        <button
-          className={`tab-btn ${activeCategory === "web" ? "active" : ""}`}
-          onClick={() => handleFilter("web")}
-        >
-          Web Apps
-        </button>
-
-        <button
-          className={`tab-btn ${activeCategory === "mobile" ? "active" : ""}`}
-          onClick={() => handleFilter("mobile")}
-        >
-          Mobile Apps
-        </button>
-
-        <button
-          className={`tab-btn ${
-            activeCategory === "ecommerce" ? "active" : ""
-          }`}
-          onClick={() => handleFilter("ecommerce")}
-        >
-          E-commerce
-        </button>
+        {["all", "web", "mobile", "ecommerce"].map((category) => (
+          <button
+            key={category}
+            className={`tab-btn ${activeCategory === category ? "active" : ""}`}
+            onClick={() => handleFilter(category)}
+          >
+            {category === "all"
+              ? "All"
+              : category === "web"
+              ? "Web Apps"
+              : category === "mobile"
+              ? "Mobile Apps"
+              : "E-commerce"}
+          </button>
+        ))}
       </div>
 
       {filteredProjects.length === 0 ? (
@@ -98,7 +83,7 @@ function Projects() {
               }}
             >
               {filteredProjects.map((project) => (
-                <div className="project-card reveal" key={project._id}>
+                <div className="project-card" key={project._id}>
                   <div className="project-image">
                     <img
                       src={project.image}
