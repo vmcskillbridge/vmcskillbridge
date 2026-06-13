@@ -145,14 +145,6 @@ function Contact() {
           </div>
 
           <div className="project-contact-card">
-            <Phone />
-
-            <h3>Call Us</h3>
-
-            <p>+91 9876543210</p>
-          </div>
-
-          <div className="project-contact-card">
             <MapPin />
 
             <h3>Visit Us</h3>
