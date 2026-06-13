@@ -2512,3 +2512,19 @@ section {
     transform: translateY(-6px) scale(1.01);
   }
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Scroll animation */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}

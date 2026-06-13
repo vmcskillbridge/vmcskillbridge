@@ -107,8 +107,8 @@ function Contact() {
   };
 
   return (
-    <main className="start-project-page">
-      <section className="project-left">
+    <main className="start-project-page reveal">
+      <section className="project-left reveal">
         <span className="project-badge">🚀 Start a Project</span>
 
         <h1>
@@ -123,31 +123,31 @@ function Contact() {
         </p>
 
         <div className="project-contact-cards">
-          <div className="project-contact-card">
+          <div className="project-contact-card reveal">
             <Mail />
             <h3>Email Us</h3>
             <p>vmcskillbridge@gmail.com</p>
           </div>
 
-          <div className="project-contact-card">
+          <div className="project-contact-card reveal">
             <Phone />
             <h3>Call Us</h3>
             <p>+91 9876543210</p>
           </div>
 
-          <div className="project-contact-card">
+          <div className="project-contact-card reveal">
             <MapPin />
             <h3>Visit Us</h3>
             <p>Hyderabad, India</p>
           </div>
         </div>
 
-        <div className="project-illustration">
+        <div className="project-illustration reveal">
           <img src="/contactbg.png" alt="Project" className="project-image" />
         </div>
       </section>
 
-      <section className="project-form-card">
+      <section className="project-form-card reveal">
         <div className="form-title">
           <div className="form-icon">
             <Pencil />

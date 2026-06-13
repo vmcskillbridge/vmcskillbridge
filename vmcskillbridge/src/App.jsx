@@ -1,3 +1,5 @@
+import ScrollReveal from "./components/ScrollReveal";
+
 import {
   BrowserRouter,
   Routes,
@@ -5,10 +7,7 @@ import {
   useLocation,
 } from "react-router-dom";
 
-import {
-  useEffect,
-  useState,
-} from "react";
+import { useEffect, useState } from "react";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -28,35 +27,20 @@ import ProtectedAdminRoute from "./admin/ProtectedAdminRoute";
 function Layout() {
   const location = useLocation();
 
-  const isAdminPage =
-    location.pathname.startsWith("/admin");
+  const isAdminPage = location.pathname.startsWith("/admin");
 
   return (
     <>
+      <ScrollReveal />
+
       {!isAdminPage && <Navbar />}
 
       <Routes>
         <Route path="/" element={<Home />} />
-
-        <Route
-          path="/careers"
-          element={<Careers />}
-        />
-
-        <Route
-          path="/apply"
-          element={<Apply />}
-        />
-
-        <Route
-          path="/contact"
-          element={<Contact />}
-        />
-
-        <Route
-          path="/admin"
-          element={<AdminLogin />}
-        />
+        <Route path="/careers" element={<Careers />} />
+        <Route path="/apply" element={<Apply />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/admin" element={<AdminLogin />} />
 
         <Route
           path="/admin/dashboard"
@@ -78,15 +62,13 @@ function Layout() {
       </Routes>
 
       {!isAdminPage && <Footer />}
-
       {!isAdminPage && <Chatbot />}
     </>
   );
 }
 
 function App() {
-  const [loading, setLoading] =
-    useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => {

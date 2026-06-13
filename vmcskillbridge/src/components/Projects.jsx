@@ -49,7 +49,7 @@ function Projects() {
   };
 
   return (
-    <section className="projects-section" id="projects">
+    <section className="projects-section reveal" id="projects">
       <div className="section-label">OUR PROJECTS</div>
 
       <h2 className="section-title">Work That Speaks</h2>
@@ -98,7 +98,7 @@ function Projects() {
               }}
             >
               {filteredProjects.map((project) => (
-                <div className="project-card" key={project._id}>
+                <div className="project-card reveal" key={project._id}>
                   <div className="project-image">
                     <img
                       src={project.image}
