@@ -2543,3 +2543,84 @@ html {
 .project-contact-card:hover {
   transform: translateY(-10px);
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Safe Reveal Animation */
+.reveal {
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.reveal.active {
+  opacity: 1;
+}
+
+/* Contact Page Fixes */
+.start-project-page {
+  padding-top: 140px;
+}
+
+/* Contact Cards Fix */
+.project-contact-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+/* Contact Form Spacing */
+.project-form-card {
+  padding: 40px;
+  animation: fadeUp 0.8s ease;
+}
+
+/* Dropdown Fix */
+.project-input select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: transparent;
+}
+
+/* Hover Effects */
+.service-card,
+.project-card,
+.project-contact-card {
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.service-card:hover,
+.project-card:hover,
+.project-contact-card:hover {
+  transform: translateY(-10px);
+}
+
+/* Fade Animation */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile Fix */
+@media (max-width: 768px) {
+  .start-project-page {
+    padding-top: 110px;
+  }
+
+  .project-contact-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .project-form-card {
+    padding: 24px;
+  }
+}
