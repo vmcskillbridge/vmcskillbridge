@@ -162,7 +162,7 @@ function Contact() {
         </div>
       </section>
 
-      <section className="project-form-card reveal">
+      <section className="project-form-card">
         <div className="form-title">
           <div className="form-icon">
             <Pencil />
