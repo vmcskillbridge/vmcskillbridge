@@ -30,8 +30,6 @@ function Layout() {
 
   return (
     <>
-      <ScrollReveal />
-
       {!isAdminPage && <Navbar />}
 
       <Routes>
