@@ -2624,3 +2624,339 @@ html {
     padding: 24px;
   }
 }
+/* =====================================================
+   FINAL WHITE PREMIUM THEME OVERRIDES
+   Add this block at the end or replace your CSS with this file.
+   ===================================================== */
+
+:root {
+  --bg: #f8fafc;
+  --surface: rgba(255, 255, 255, 0.96);
+  --card: #ffffff;
+  --card-2: #f1f5f9;
+  --border: rgba(15, 23, 42, 0.08);
+  --border-strong: rgba(37, 99, 235, 0.28);
+  --text: #0f172a;
+  --muted: #475569;
+  --purple: #2563eb;
+  --blue: #06b6d4;
+  --gradient: linear-gradient(135deg, #2563eb, #06b6d4);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg) !important;
+  color: var(--text) !important;
+}
+
+.app {
+  background:
+    radial-gradient(circle at top left, rgba(37, 99, 235, 0.09), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(6, 182, 212, 0.09), transparent 30%),
+    #f8fafc !important;
+}
+
+section,
+.services-section,
+.projects-section,
+.why-choose-section {
+  background: transparent !important;
+}
+
+.navbar {
+  background: rgba(255, 255, 255, 0.86) !important;
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06);
+}
+
+.nav-container {
+  background: rgba(255, 255, 255, 0.92) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: 0 10px 35px rgba(15, 23, 42, 0.06);
+}
+
+.logo,
+.footer-brand,
+.apply-logo,
+.nav-menu a,
+.section-title,
+.project-title,
+.form-title h2,
+.project-left h1,
+.career-hero-left h1,
+h1,
+h2,
+h3,
+label {
+  color: var(--text) !important;
+}
+
+.section-label,
+.mini-title,
+.nav-menu a:hover {
+  color: var(--purple) !important;
+}
+
+p,
+.section-subtitle,
+.project-desc,
+.hero-text,
+.project-left > p,
+.form-title p,
+.safe-text,
+.footer-section p,
+.footer-section a,
+.project-contact-card p,
+.career-hero-left p {
+  color: var(--muted) !important;
+}
+
+.badge,
+.career-badge,
+.project-badge {
+  color: #1d4ed8 !important;
+  background: rgba(37, 99, 235, 0.08) !important;
+  border: 1px solid rgba(37, 99, 235, 0.18) !important;
+}
+
+.service-card,
+.project-card,
+.reason-card,
+.project-contact-card,
+.project-form-card,
+.culture-card,
+.job-row,
+.apply-card,
+.success-card,
+.next-card,
+.dashboard-card,
+.settings-card,
+.add-project-card,
+.admin-login-card,
+.admin-table,
+.career-stats-new,
+.culture-section,
+.hero-visual,
+.project-illustration {
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: 0 12px 40px rgba(15, 23, 42, 0.07) !important;
+}
+
+.service-card:hover,
+.project-card:hover,
+.reason-card:hover,
+.project-contact-card:hover,
+.culture-card:hover,
+.job-row:hover {
+  transform: translateY(-8px);
+  border-color: var(--border-strong) !important;
+  box-shadow: 0 22px 55px rgba(37, 99, 235, 0.13) !important;
+}
+
+.logo-icon,
+.footer-brand-icon,
+.sidebar-icon,
+.service-icon,
+.icon-box,
+.contact-icon,
+.reason-icon,
+.form-icon,
+.project-contact-card svg,
+.job-icon,
+.dashboard-card-icon,
+.loader-circle,
+.chatbot-toggle,
+.chatbot-header,
+.chatbot-input button,
+.success-check {
+  background: var(--gradient) !important;
+  color: white !important;
+  box-shadow: 0 12px 35px rgba(37, 99, 235, 0.22) !important;
+}
+
+.btn-primary,
+.hero-btn,
+.submit-btn,
+.apply-btn,
+.start-project-btn,
+.add-project-btn,
+.admin-login-btn,
+.admin-action-btn,
+.admin-delete-btn,
+.back-careers,
+.tab-btn.active,
+.tab-btn:hover,
+.carousel-btn:hover {
+  background: var(--gradient) !important;
+  color: white !important;
+  border-color: transparent !important;
+  box-shadow: 0 12px 35px rgba(37, 99, 235, 0.22) !important;
+}
+
+.btn-outline,
+.view-all-btn,
+.choose-file-btn,
+.tab-btn,
+.carousel-btn {
+  background: #ffffff !important;
+  color: var(--text) !important;
+  border: 1px solid var(--border) !important;
+}
+
+.btn-outline:hover,
+.view-all-btn:hover,
+.choose-file-btn:hover,
+.carousel-btn:hover {
+  border-color: var(--border-strong) !important;
+  box-shadow: 0 12px 35px rgba(37, 99, 235, 0.12) !important;
+}
+
+.project-input div,
+.textarea-box,
+.file-upload,
+.apply-group input,
+.apply-group select,
+.apply-group textarea,
+.settings-input,
+.input-box,
+.form-group input,
+.form-group textarea,
+.chatbot-input input,
+.resume-box {
+  background: #ffffff !important;
+  border: 1px solid #dbeafe !important;
+  color: var(--text) !important;
+}
+
+input,
+textarea,
+select {
+  color: var(--text) !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+.project-input svg,
+.textarea-box svg,
+.file-upload svg,
+.apply-group label svg,
+.resume-box svg,
+.input-box svg {
+  color: var(--purple) !important;
+}
+
+.project-input select option,
+.apply-group select option {
+  background: #ffffff !important;
+  color: var(--text) !important;
+}
+
+.footer {
+  background: #ffffff !important;
+  border-top: 1px solid var(--border) !important;
+}
+
+.footer-bottom {
+  border-top: 1px solid var(--border) !important;
+  color: #64748b !important;
+}
+
+.admin-dashboard,
+.admin-login-page,
+.add-project-page,
+.loader-screen,
+.chatbot-box {
+  background: #f8fafc !important;
+}
+
+.admin-sidebar {
+  background: #ffffff !important;
+  border-right: 1px solid var(--border) !important;
+}
+
+.sidebar-link,
+.logout-btn,
+.admin-table td,
+.admin-table th {
+  color: var(--text) !important;
+}
+
+.admin-table th {
+  background: #eff6ff !important;
+}
+
+.chat-message.bot {
+  background: #e2e8f0 !important;
+  color: var(--text) !important;
+}
+
+.chat-message.user {
+  background: var(--gradient) !important;
+  color: white !important;
+}
+
+.project-card-image,
+.project-image img {
+  transition: transform 0.5s ease;
+}
+
+.project-card:hover .project-card-image,
+.project-card:hover .project-image img {
+  transform: scale(1.05);
+}
+
+.reveal,
+.animate-left,
+.animate-right,
+.animate-up {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+.service-card,
+.project-card,
+.reason-card,
+.project-contact-card,
+.project-form-card,
+.cta,
+.hero-content,
+.hero-visual {
+  animation: finalFadeUp 0.7s ease both;
+}
+
+@keyframes finalFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 900px) {
+  .nav-menu {
+    background: #ffffff !important;
+    border: 1px solid var(--border) !important;
+    box-shadow: 0 20px 55px rgba(15, 23, 42, 0.12);
+  }
+}
+
+@media (max-width: 768px) {
+  .start-project-page {
+    padding-top: 40px !important;
+  }
+
+  .project-contact-cards {
+    grid-template-columns: 1fr !important;
+  }
+}
