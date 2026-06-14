@@ -2960,3 +2960,48 @@ textarea::placeholder {
     grid-template-columns: 1fr !important;
   }
 }
+
+
+/* FIXED NAVBAR + MOBILE HAMBURGER FIX */
+
+.navbar {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+}
+
+body {
+  padding-top: 92px;
+}
+
+.menu-toggle {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .menu-toggle {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-menu {
+    position: fixed !important;
+    top: 92px;
+    left: 16px;
+    right: 16px;
+    z-index: 9998;
+  }
+}
+
+@media (max-width: 600px) {
+  body {
+    padding-top: 82px;
+  }
+
+  .nav-menu {
+    top: 82px;
+  }
+}
