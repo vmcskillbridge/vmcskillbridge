@@ -1,4 +1,3 @@
-
 import {
   BrowserRouter,
   Routes,
@@ -7,6 +6,11 @@ import {
 } from "react-router-dom";
 
 import { useEffect, useState } from "react";
+
+import {
+  AnimatePresence,
+  motion,
+} from "framer-motion";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -23,40 +27,106 @@ import AdminDashboard from "./admin/AdminDashboard";
 import AddProject from "./admin/AddProject";
 import ProtectedAdminRoute from "./admin/ProtectedAdminRoute";
 
+function PageWrapper({ children }) {
+  return (
+    <motion.div
+      initial={{
+        opacity: 0,
+        y: 40,
+      }}
+      animate={{
+        opacity: 1,
+        y: 0,
+      }}
+      exit={{
+        opacity: 0,
+        y: -40,
+      }}
+      transition={{
+        duration: 0.5,
+      }}
+      className="page-transition"
+    >
+      {children}
+    </motion.div>
+  );
+}
+
 function Layout() {
   const location = useLocation();
 
-  const isAdminPage = location.pathname.startsWith("/admin");
+  const isAdminPage =
+    location.pathname.startsWith("/admin");
 
   return (
     <>
       {!isAdminPage && <Navbar />}
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/careers" element={<Careers />} />
-        <Route path="/apply" element={<Apply />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/admin" element={<AdminLogin />} />
+      <AnimatePresence mode="wait">
+        <Routes
+          location={location}
+          key={location.pathname}
+        >
+          <Route
+            path="/"
+            element={
+              <PageWrapper>
+                <Home />
+              </PageWrapper>
+            }
+          />
 
-        <Route
-          path="/admin/dashboard"
-          element={
-            <ProtectedAdminRoute>
-              <AdminDashboard />
-            </ProtectedAdminRoute>
-          }
-        />
+          <Route
+            path="/careers"
+            element={
+              <PageWrapper>
+                <Careers />
+              </PageWrapper>
+            }
+          />
 
-        <Route
-          path="/admin/add-project"
-          element={
-            <ProtectedAdminRoute>
-              <AddProject />
-            </ProtectedAdminRoute>
-          }
-        />
-      </Routes>
+          <Route
+            path="/apply"
+            element={
+              <PageWrapper>
+                <Apply />
+              </PageWrapper>
+            }
+          />
+
+          <Route
+            path="/contact"
+            element={
+              <PageWrapper>
+                <Contact />
+              </PageWrapper>
+            }
+          />
+
+          <Route
+            path="/admin"
+            element={<AdminLogin />}
+          />
+
+          <Route
+            path="/admin/dashboard"
+            element={
+              <ProtectedAdminRoute>
+                <AdminDashboard />
+              </ProtectedAdminRoute>
+            }
+          />
+
+          <Route
+            path="/admin/add-project"
+            element={
+              <ProtectedAdminRoute>
+                <AddProject />
+              </ProtectedAdminRoute>
+            }
+          />
+        </Routes>
+      </AnimatePresence>
 
       {!isAdminPage && <Footer />}
       {!isAdminPage && <Chatbot />}
@@ -65,7 +135,8 @@ function Layout() {
 }
 
 function App() {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] =
+    useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => {

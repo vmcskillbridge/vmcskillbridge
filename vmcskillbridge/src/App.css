@@ -3082,3 +3082,9 @@ body {
     top: 82px !important;
   }
 }
+
+```css
+.page-transition {
+  width: 100%;
+}
+```
