@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL =
+  import.meta.env.VITE_API_URL || "https://vmcskillbridge.onrender.com";
 
 function Projects() {
   const [projects, setProjects] = useState([]);
   const [activeCategory, setActiveCategory] = useState("all");
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -16,6 +18,8 @@ function Projects() {
       } catch (error) {
         console.log("Error fetching projects:", error);
         setProjects([]);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -49,7 +53,7 @@ function Projects() {
   };
 
   return (
-    <section className="projects-section reveal" id="projects">
+    <section className="projects-section" id="projects">
       <div className="section-label">OUR PROJECTS</div>
       <h2 className="section-title">Work That Speaks</h2>
 
@@ -71,7 +75,9 @@ function Projects() {
         ))}
       </div>
 
-      {filteredProjects.length === 0 ? (
+      {loading ? (
+        <p className="section-subtitle">Loading projects...</p>
+      ) : filteredProjects.length === 0 ? (
         <p className="section-subtitle">No projects found.</p>
       ) : (
         <>
@@ -89,6 +95,7 @@ function Projects() {
                       src={project.image}
                       alt={project.title}
                       className="project-card-image"
+                      loading="lazy"
                     />
                   </div>
 
