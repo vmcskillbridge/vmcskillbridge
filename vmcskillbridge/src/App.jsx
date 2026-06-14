@@ -1,4 +1,3 @@
-import ScrollReveal from "./components/ScrollReveal";
 
 import {
   BrowserRouter,
