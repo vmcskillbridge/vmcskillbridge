@@ -65,7 +65,6 @@ router.post("/", upload.single("resume"), async (req, res) => {
       html: `
 <div style="font-family:Arial,sans-serif;background:#f4f7fb;padding:40px 20px;">
   <div style="max-width:700px;margin:auto;background:white;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.08);">
-    
     <div style="background:linear-gradient(135deg,#2563eb,#7c3aed);padding:50px 30px;text-align:center;color:white;">
       <h1 style="margin:0;font-size:36px;font-weight:700;">VMC SkillBridge</h1>
       <p style="margin-top:12px;font-size:17px;">Where work meets skill.</p>
@@ -92,7 +91,6 @@ router.post("/", upload.single("resume"), async (req, res) => {
 
       <div style="margin-top:30px;background:#f8fafc;border:1px solid #e5e7eb;border-radius:14px;padding:28px;">
         <h3 style="margin-top:0;color:#2563eb;">Selection Process</h3>
-
         <p>✅ Initial Application Review</p>
         <p>✅ Profile Shortlisting Based on Skills & Experience</p>
         <p>✅ Technical / HR Interaction</p>
@@ -179,12 +177,133 @@ router.put("/:id/status", async (req, res) => {
       });
     }
 
+    if (status === "Accepted" || status === "Rejected") {
+      const subject =
+        status === "Accepted"
+          ? "Application Accepted - VMC SkillBridge"
+          : "Application Update - VMC SkillBridge";
+
+      const html =
+        status === "Accepted"
+          ? `
+<div style="font-family:Arial,sans-serif;background:#f4f7fb;padding:40px 20px;">
+  <div style="max-width:700px;margin:auto;background:white;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.08);">
+    <div style="background:linear-gradient(135deg,#16a34a,#2563eb);padding:50px 30px;text-align:center;color:white;">
+      <h1 style="margin:0;font-size:36px;font-weight:700;">VMC SkillBridge</h1>
+      <p style="margin-top:12px;font-size:17px;">Where work meets skill.</p>
+    </div>
+
+    <div style="padding:40px;color:#1f2937;line-height:1.9;font-size:15px;">
+      <h2 style="margin-top:0;color:#16a34a;">Application Accepted</h2>
+
+      <p>Dear <b>${application.fullName}</b>,</p>
+
+      <p>
+        Congratulations! We are pleased to inform you that your application for the role of 
+        <b>${application.position}</b> at <b>VMC SkillBridge</b> has been accepted.
+      </p>
+
+      <p>
+        Our hiring team has reviewed your profile, skills, and submitted details, and we are happy to move your application to the next stage.
+      </p>
+
+      <div style="margin-top:30px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:14px;padding:28px;">
+        <h3 style="margin-top:0;color:#16a34a;">Next Steps</h3>
+        <p>✅ Final Profile Verification</p>
+        <p>✅ HR / Technical Discussion</p>
+        <p>✅ Offer Confirmation</p>
+        <p>✅ Onboarding Process</p>
+      </div>
+
+      <div style="text-align:center;margin-top:40px;">
+        <a href="https://www.vmcskillbridge.com"
+          style="background:#16a34a;color:white;padding:15px 30px;border-radius:10px;text-decoration:none;font-weight:600;display:inline-block;">
+          Visit Our Website
+        </a>
+      </div>
+
+      <p style="margin-top:45px;">
+        Our team will contact you shortly with further instructions regarding the next step.
+      </p>
+
+      <p>
+        Sincerely,<br/>
+        <b>VMC SkillBridge Hiring Team</b>
+      </p>
+    </div>
+  </div>
+</div>
+          `
+          : `
+<div style="font-family:Arial,sans-serif;background:#f4f7fb;padding:40px 20px;">
+  <div style="max-width:700px;margin:auto;background:white;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.08);">
+    <div style="background:linear-gradient(135deg,#dc2626,#7c3aed);padding:50px 30px;text-align:center;color:white;">
+      <h1 style="margin:0;font-size:36px;font-weight:700;">VMC SkillBridge</h1>
+      <p style="margin-top:12px;font-size:17px;">Where work meets skill.</p>
+    </div>
+
+    <div style="padding:40px;color:#1f2937;line-height:1.9;font-size:15px;">
+      <h2 style="margin-top:0;color:#dc2626;">Application Status Update</h2>
+
+      <p>Dear <b>${application.fullName}</b>,</p>
+
+      <p>
+        Thank you for applying for the role of <b>${application.position}</b> at <b>VMC SkillBridge</b>.
+      </p>
+
+      <p>
+        We sincerely appreciate your interest, time, and effort in submitting your application.
+      </p>
+
+      <p>
+        After careful review, we regret to inform you that your application has not been selected for this opportunity.
+      </p>
+
+      <div style="margin-top:30px;background:#fef2f2;border:1px solid #fecaca;border-radius:14px;padding:28px;">
+        <h3 style="margin-top:0;color:#dc2626;">Important Note</h3>
+        <p>
+          This decision does not reflect negatively on your skills or potential. 
+          We encourage you to apply again for future opportunities that match your profile.
+        </p>
+      </div>
+
+      <div style="text-align:center;margin-top:40px;">
+        <a href="https://www.vmcskillbridge.com"
+          style="background:#2563eb;color:white;padding:15px 30px;border-radius:10px;text-decoration:none;font-weight:600;display:inline-block;">
+          Visit Our Website
+        </a>
+      </div>
+
+      <p style="margin-top:45px;">
+        We wish you all the best in your career and future opportunities.
+      </p>
+
+      <p>
+        Sincerely,<br/>
+        <b>VMC SkillBridge Hiring Team</b>
+      </p>
+    </div>
+  </div>
+</div>
+          `;
+
+      await sendEmail({
+        to: application.email,
+        subject,
+        html,
+      });
+    }
+
     res.json({
       success: true,
+      message:
+        status === "Pending"
+          ? "Application status updated"
+          : `Application ${status} and email sent`,
       application,
     });
   } catch (error) {
-    console.log("Status update error:", error);
+    console.log("Status update/email error:", error);
 
     res.status(500).json({
       success: false,
