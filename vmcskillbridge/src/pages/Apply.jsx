@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import axios from "axios";
 
 import {
@@ -22,6 +22,8 @@ const API_URL =
   "https://vmcskillbridge.onrender.com";
 
 function Apply() {
+  const [searchParams] = useSearchParams();
+
   const [submitted, setSubmitted] = useState(false);
   const [resumeName, setResumeName] = useState("");
   const [loading, setLoading] = useState(false);
@@ -37,6 +39,22 @@ function Apply() {
     experience: "",
     resume: null,
   });
+
+  useEffect(() => {
+    const position = searchParams.get("position");
+
+    if (position) {
+      setFormData((prev) => ({
+        ...prev,
+        position:
+          position === "Frontend Developer"
+            ? "Frontend Developer - Remote"
+            : position === "Backend Developer"
+            ? "Backend Developer - Hybrid"
+            : position,
+      }));
+    }
+  }, [searchParams]);
 
   const handleChange = (e) => {
     setFormData({
@@ -92,7 +110,10 @@ function Apply() {
       setSubmitted(true);
     } catch (error) {
       console.log("Application Error:", error);
-      alert(error.response?.data?.message || "Application failed. Please try again.");
+      alert(
+        error.response?.data?.message ||
+          "Application failed. Please try again."
+      );
     } finally {
       setLoading(false);
     }
@@ -147,7 +168,9 @@ function Apply() {
 
         <div className="apply-head">
           <h1>Apply for this Position</h1>
-          <p>Fill out the form below and our hiring team will contact you soon.</p>
+          <p>
+            Fill out the form below and our hiring team will contact you soon.
+          </p>
         </div>
 
         <form className="apply-form" onSubmit={handleSubmit}>
@@ -253,11 +276,12 @@ function Apply() {
               required
             >
               <option value="">Select Position</option>
-              <option value="Frontend Developer">Frontend Developer</option>
-              <option value="Backend Developer">Backend Developer</option>
-              <option value="Full Stack Developer">Full Stack Developer</option>
-              <option value="UI/UX Designer">UI/UX Designer</option>
-              <option value="DevOps Engineer">DevOps Engineer</option>
+              <option value="Frontend Developer - Remote">
+                Frontend Developer - Remote
+              </option>
+              <option value="Backend Developer - Hybrid">
+                Backend Developer - Hybrid
+              </option>
             </select>
           </div>
 
@@ -292,7 +316,11 @@ function Apply() {
             </select>
           </div>
 
-          <button className="submit-application" type="submit" disabled={loading}>
+          <button
+            className="submit-application"
+            type="submit"
+            disabled={loading}
+          >
             {loading ? "Submitting..." : "Submit Application"}
             <ArrowRight size={22} />
           </button>

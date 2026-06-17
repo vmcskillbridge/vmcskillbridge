@@ -3158,3 +3158,124 @@ body {
   transform: perspective(1000px) rotateX(6deg) rotateY(-6deg) translateY(-10px);
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.18);
 }
+
+.job-detail-row {
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 22px;
+}
+
+.job-meta-wrap {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.job-description-box {
+  width: 100%;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+  padding: 24px;
+  margin-top: 10px;
+}
+
+.job-description-box h4 {
+  margin: 0 0 10px;
+  color: #111827;
+  font-size: 18px;
+}
+
+.job-description-box p {
+  color: #475569;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+.job-description-box ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.job-description-box li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: #334155;
+  line-height: 1.6;
+}
+
+.job-description-box li svg {
+  color: #2563eb;
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .job-meta-wrap {
+    width: 100%;
+  }
+
+  .job-description-box {
+    padding: 18px;
+  }
+}
+.job-detail-row {
+  grid-template-columns: 1fr;
+  align-items: flex-start;
+  gap: 18px;
+  border-radius: 18px !important;
+  margin-bottom: 18px;
+}
+
+.job-meta-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.job-description-box {
+  width: 100%;
+  padding: 22px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(139, 92, 246, 0.18);
+}
+
+.job-description-box h4 {
+  margin-bottom: 10px;
+  color: white;
+}
+
+.job-description-box p {
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 18px;
+}
+
+.job-description-box ul {
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+
+.job-description-box li {
+  display: flex;
+  gap: 10px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.job-description-box li svg {
+  color: #8b5cf6;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.job-detail-row .apply-btn {
+  justify-self: start;
+}

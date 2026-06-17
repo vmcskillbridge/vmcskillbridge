@@ -5,7 +5,6 @@ import {
   Globe,
   Code2,
   Server,
-  Layers,
   PenTool,
   Rocket,
   MapPin,
@@ -14,66 +13,61 @@ import {
   Lightbulb,
   UserCheck,
   Timer,
+  CheckCircle,
 } from "lucide-react";
 
 import { Link } from "react-router-dom";
 
 function Careers() {
   const scrollToPositions = () => {
-    const section = document.getElementById("open-positions");
-
-    if (section) {
-      section.scrollIntoView({
-        behavior: "smooth",
-      });
-    }
+    document.getElementById("open-positions")?.scrollIntoView({
+      behavior: "smooth",
+    });
   };
 
   const scrollToCulture = () => {
-    const section = document.getElementById("culture");
-
-    if (section) {
-      section.scrollIntoView({
-        behavior: "smooth",
-      });
-    }
+    document.getElementById("culture")?.scrollIntoView({
+      behavior: "smooth",
+    });
   };
 
   const jobs = [
     {
       icon: <Code2 />,
       title: "Frontend Developer",
-      skills: "React, JavaScript, TypeScript",
+      skills: "React.js, JavaScript, HTML, CSS",
       location: "Remote",
-      type: "Full-time",
+      type: "Full-time / Internship",
+      experience: "0–2 Years",
+      description:
+        "Build responsive websites and web applications using React.js. Convert UI/UX designs into functional interfaces, integrate REST APIs, optimize performance, and maintain clean frontend code.",
+      requirements: [
+        "Good knowledge of HTML, CSS, and JavaScript",
+        "Experience or basic understanding of React.js",
+        "Responsive web design knowledge",
+        "Basic REST API integration skills",
+        "Familiarity with Git and GitHub",
+        "Freshers can apply",
+      ],
     },
     {
       icon: <Server />,
       title: "Backend Developer",
-      skills: "Node.js, Express, MongoDB",
-      location: "Remote",
-      type: "Full-time",
-    },
-    {
-      icon: <Layers />,
-      title: "Full Stack Developer",
-      skills: "MERN Stack, Next.js",
+      skills: "Node.js, Express.js, MongoDB",
       location: "Hybrid (Hyderabad)",
-      type: "Full-time",
-    },
-    {
-      icon: <PenTool />,
-      title: "UI/UX Designer",
-      skills: "Figma, Adobe XD, UI Design",
-      location: "Remote",
-      type: "Full-time",
-    },
-    {
-      icon: <Code2 />,
-      title: "DevOps Engineer",
-      skills: "AWS, Docker, CI/CD",
-      location: "Remote",
-      type: "Full-time",
+      type: "Full-time / Internship",
+      experience: "0–2 Years",
+      description:
+        "Develop and maintain server-side applications using Node.js and Express.js. Build secure REST APIs, manage MongoDB databases, implement authentication, and support frontend integration.",
+      requirements: [
+        "Knowledge of Node.js and Express.js",
+        "Experience or basic understanding of MongoDB/Mongoose",
+        "Understanding of REST APIs",
+        "Basic JWT authentication knowledge",
+        "Familiarity with Git and GitHub",
+        "Good debugging and problem-solving skills",
+        "Freshers can apply",
+      ],
     },
   ];
 
@@ -163,7 +157,7 @@ function Careers() {
         <div className="career-stat-card">
           <UserRound />
           <div>
-            <h3>5+</h3>
+            <h3>2</h3>
             <p>Open Positions</p>
           </div>
         </div>
@@ -192,7 +186,7 @@ function Careers() {
 
         <div className="jobs-list">
           {jobs.map((job, index) => (
-            <div className="job-row" key={index}>
+            <div className="job-row job-detail-row" key={index}>
               <div className="job-main">
                 <div className="job-icon">{job.icon}</div>
 
@@ -202,27 +196,47 @@ function Careers() {
                 </div>
               </div>
 
-              <div className="job-info">
-                <MapPin size={16} />
-                <span>{job.location}</span>
+              <div className="job-meta-wrap">
+                <div className="job-info">
+                  <MapPin size={16} />
+                  <span>{job.location}</span>
+                </div>
+
+                <div className="job-info">
+                  <Briefcase size={16} />
+                  <span>{job.type}</span>
+                </div>
+
+                <div className="job-info">
+                  <Timer size={16} />
+                  <span>{job.experience}</span>
+                </div>
               </div>
 
-              <div className="job-info">
-                <Briefcase size={16} />
-                <span>{job.type}</span>
+              <div className="job-description-box">
+                <h4>Job Description</h4>
+                <p>{job.description}</p>
+
+                <h4>Requirements</h4>
+                <ul>
+                  {job.requirements.map((req, i) => (
+                    <li key={i}>
+                      <CheckCircle size={15} />
+                      <span>{req}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
 
-              <Link to="/apply" className="apply-btn">
+              <Link
+                to={`/apply?position=${encodeURIComponent(job.title)}`}
+                className="apply-btn"
+              >
                 Apply Now
               </Link>
             </div>
           ))}
         </div>
-
-        <button className="view-all-btn" onClick={scrollToPositions}>
-          View All Openings
-          <ArrowRight size={18} />
-        </button>
       </section>
 
       <section className="culture-section" id="culture">
