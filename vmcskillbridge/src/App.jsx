@@ -43,7 +43,8 @@ function PageWrapper({ children }) {
         y: -40,
       }}
       transition={{
-        duration: 0.5,
+        duration: 0.6,
+        ease: "easeOut",
       }}
       className="page-transition"
     >
@@ -134,6 +135,110 @@ function Layout() {
   );
 }
 
+function AppContent() {
+  const [scrollProgress, setScrollProgress] =
+    useState(0);
+
+  const [cursor, setCursor] = useState({
+    x: 0,
+    y: 0,
+  });
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const totalHeight =
+        document.documentElement.scrollHeight -
+        window.innerHeight;
+
+      const progress =
+        totalHeight > 0
+          ? (window.scrollY / totalHeight) * 100
+          : 0;
+
+      setScrollProgress(progress);
+    };
+
+    const handleMouseMove = (e) => {
+      setCursor({
+        x: e.clientX,
+        y: e.clientY,
+      });
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    window.addEventListener(
+      "mousemove",
+      handleMouseMove
+    );
+
+    handleScroll();
+
+    return () => {
+      window.removeEventListener(
+        "scroll",
+        handleScroll
+      );
+      window.removeEventListener(
+        "mousemove",
+        handleMouseMove
+      );
+    };
+  }, []);
+
+  useEffect(() => {
+    const reveals =
+      document.querySelectorAll(".reveal");
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add(
+              "active"
+            );
+          }
+        });
+      },
+      {
+        threshold: 0.15,
+      }
+    );
+
+    reveals.forEach((el) =>
+      observer.observe(el)
+    );
+
+    return () => {
+      reveals.forEach((el) =>
+        observer.unobserve(el)
+      );
+    };
+  }, []);
+
+  return (
+    <>
+      <div
+        className="scroll-progress"
+        style={{
+          width: `${scrollProgress}%`,
+        }}
+      />
+
+      <div
+        className="cursor-glow"
+        style={{
+          left: `${cursor.x}px`,
+          top: `${cursor.y}px`,
+        }}
+      />
+
+      <div className="app">
+        <Layout />
+      </div>
+    </>
+  );
+}
+
 function App() {
   const [loading, setLoading] =
     useState(true);
@@ -152,9 +257,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div className="app">
-        <Layout />
-      </div>
+      <AppContent />
     </BrowserRouter>
   );
 }
