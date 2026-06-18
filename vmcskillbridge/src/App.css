@@ -3449,3 +3449,27 @@ body {
 .job-modal-icon {
   background: linear-gradient(135deg, #2563eb, #06b6d4) !important;
 }
+
+.navbar {
+  background: transparent !important;
+  backdrop-filter: none !important;
+}
+
+.nav-container {
+  background: rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(14px);
+}
+
+.navbar-scrolled .nav-container {
+  background: rgba(255, 255, 255, 0.92) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+}
+
+.navbar-scrolled .nav-menu a,
+.navbar-scrolled .logo span {
+  color: #0f172a;
+}
+
+.navbar-scrolled .menu-toggle {
+  color: #0f172a;
+}
