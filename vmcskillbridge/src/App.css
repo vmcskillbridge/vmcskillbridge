@@ -3407,3 +3407,45 @@ body {
     width: 100%;
   }
 }
+
+.job-modal-overlay {
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(8px);
+}
+
+.job-modal {
+  background: #ffffff !important;
+  color: #111827 !important;
+  border: 1px solid #e5e7eb !important;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.25) !important;
+}
+
+.job-modal h2,
+.job-modal h3 {
+  color: #111827 !important;
+}
+
+.job-modal-skills,
+.job-modal-desc,
+.job-modal-list li {
+  color: #475569 !important;
+}
+
+.job-modal-meta span {
+  background: #eef2ff !important;
+  border: 1px solid #c7d2fe !important;
+  color: #3730a3 !important;
+}
+
+.job-modal-close {
+  background: #f1f5f9 !important;
+  color: #111827 !important;
+}
+
+.job-modal-list svg {
+  color: #2563eb !important;
+}
+
+.job-modal-icon {
+  background: linear-gradient(135deg, #2563eb, #06b6d4) !important;
+}
