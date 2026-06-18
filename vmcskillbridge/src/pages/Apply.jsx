@@ -46,12 +46,7 @@ function Apply() {
     if (position) {
       setFormData((prev) => ({
         ...prev,
-        position:
-          position === "Frontend Developer"
-            ? "Frontend Developer - Remote"
-            : position === "Backend Developer"
-            ? "Backend Developer - Hybrid"
-            : position,
+        position,
       }));
     }
   }, [searchParams]);
@@ -269,6 +264,7 @@ function Apply() {
             <label>
               <Briefcase size={18} /> Select Position Applied For *
             </label>
+
             <select
               name="position"
               value={formData.position}
@@ -276,12 +272,13 @@ function Apply() {
               required
             >
               <option value="">Select Position</option>
-              <option value="Frontend Developer - Remote">
-                Frontend Developer - Remote
-              </option>
-              <option value="Backend Developer - Hybrid">
-                Backend Developer - Hybrid
-              </option>
+              <option value="Frontend Developer">Frontend Developer</option>
+              <option value="Backend Developer">Backend Developer</option>
+              <option value="MERN Stack Developer">MERN Stack Developer</option>
+              <option value="React Developer">React Developer</option>
+              <option value="Node.js Developer">Node.js Developer</option>
+              <option value="MongoDB Developer">MongoDB Developer</option>
+              <option value="Full Stack Developer">Full Stack Developer</option>
             </select>
           </div>
 

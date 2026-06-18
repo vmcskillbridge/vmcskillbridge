@@ -3279,3 +3279,131 @@ body {
 .job-detail-row .apply-btn {
   justify-self: start;
 }
+
+.job-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(10px);
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.job-modal {
+  width: 100%;
+  max-width: 760px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: #080b1c;
+  border: 1px solid rgba(139, 92, 246, 0.35);
+  border-radius: 26px;
+  padding: 34px;
+  position: relative;
+  box-shadow: 0 0 60px rgba(139, 92, 246, 0.3);
+}
+
+.job-modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+  cursor: pointer;
+}
+
+.job-modal-icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 20px;
+  background: var(--gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 22px;
+  box-shadow: 0 0 25px rgba(139, 92, 246, 0.45);
+}
+
+.job-modal h2 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.job-modal-skills {
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+
+.job-modal-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 26px;
+}
+
+.job-modal-meta span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(139, 92, 246, 0.12);
+  border: 1px solid rgba(139, 92, 246, 0.25);
+  padding: 10px 14px;
+  border-radius: 999px;
+  color: #ddd6fe;
+  font-size: 14px;
+}
+
+.job-modal h3 {
+  margin: 24px 0 12px;
+  font-size: 20px;
+}
+
+.job-modal-desc {
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.job-modal-list {
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+
+.job-modal-list li {
+  display: flex;
+  gap: 10px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.job-modal-list svg {
+  color: #8b5cf6;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.job-modal-apply {
+  margin-top: 28px;
+  display: inline-flex;
+  justify-content: center;
+}
+
+@media (max-width: 600px) {
+  .job-modal {
+    padding: 26px 20px;
+  }
+
+  .job-modal h2 {
+    font-size: 26px;
+  }
+
+  .job-modal-apply {
+    width: 100%;
+  }
+}
